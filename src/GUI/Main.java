@@ -10,9 +10,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("Scenes/ControllSys.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("Scenes/Login.fxml"));
         primaryStage.setTitle("Autonomous car 3000");
-        primaryStage.setScene(new Scene(root, 1200, 700));
+        primaryStage.setScene(new Scene(root, 700, 400));
         primaryStage.show();
     }
 
