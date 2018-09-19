@@ -1,4 +1,4 @@
 package GUI.Controller;
 
-public class GUI {
+public class ControllSyd {
 }
