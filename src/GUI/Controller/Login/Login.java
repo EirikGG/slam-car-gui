@@ -5,10 +5,12 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import static GUI.SdcStart.sceneTitle;
@@ -50,7 +52,7 @@ public class Login {
         if (this.credentials.doCheckCredentials(username, password)) {
             doChangeScene(event);
         } else {
-            this.warningLabel.setText(sceneTitle);
+            this.warningLabel.setText("Wrong login credentials");
         }
     }
 
@@ -63,10 +65,20 @@ public class Login {
             // Gets the new root from FXML file.
             Parent root = FXMLLoader.load(getClass().getResource("../../Scenes/ControlSys.fxml"));
 
-            // Sets the new stage.
-            stage.setTitle("Autonomous car 3000");
-            stage.setScene(new Scene(root, 1200, 700));
+            // Scenes size.
+            int width = 1400;
+            int height = 700;
+
+            // Centering the scene.
+            Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+            stage.setX((screenBounds.getWidth() - width) / 2);
+            stage.setY((screenBounds.getHeight() - height) / 2);
+
+            // Set and shows the new scene.
+            stage.setTitle(sceneTitle);
+            stage.setScene(new Scene(root, 1400, 700));
             stage.show();
+
         } catch (Exception exc) {
             System.out.println(exc.getMessage());
         }
