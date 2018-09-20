@@ -45,7 +45,7 @@ public class Login {
      * @param primaryStage
      * @throws Exception Cant find fxml file.
      */
-    private void doChangeScene() throws Exception{
+    private void doChangeScene(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Scenes/ControllSys.fxml"));
         primaryStage.setScene(new Scene(root, 1200, 700));
         primaryStage.show();
