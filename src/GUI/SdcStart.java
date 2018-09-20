@@ -6,12 +6,21 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+/**
+ * Start self driving car GUI.
+ *
+ * @author Eirik G. Gustafsson
+ * @version 20.09.2018
+ */
+public class SdcStart extends Application {
+    // Scene title.
+    public static String sceneTitle = "Atonomous car 3000";
 
+    // Sets and starts the scene.
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Scenes/Login.fxml"));
-        primaryStage.setTitle("Autonomous car 3000");
+        primaryStage.setTitle(sceneTitle);
         primaryStage.setScene(new Scene(root, 700, 400));
         primaryStage.show();
     }
