@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import eu.hansolo.medusa.Gauge?>
+<?import com.jfoenix.controls.JFXToggleButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.LineChart?>
@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.WorldMapView?>
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1400.0" stylesheets="@../Theme/modena_dark.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ControlSys.ControlSys">
    <children>
@@ -44,24 +45,23 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                   </ScatterChart>
-                  <ScatterChart layoutX="452.0" layoutY="10.0">
-                     <xAxis>
-                        <CategoryAxis side="BOTTOM" />
-                     </xAxis>
-                     <yAxis>
-                        <NumberAxis side="LEFT" />
-                     </yAxis>
-                  </ScatterChart>
+                  <WorldMapView prefHeight="200.0" prefWidth="200.0">
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </WorldMapView>
                </children>
             </GridPane>
-            <Gauge angleRange="200.0" animated="true" foregroundPaint="#e4dddd00" highlightAreas="true" lcdFont="DIGITAL" majorTickMarkColor="white" maxValue="10.0" minorTickMarkColor="black" needleColor="dodgerblue" prefHeight="200.0" prefWidth="200.0" tickLabelColor="white" tickLabelLocation="OUTSIDE" tickMarkColor="orange" title="Speed" titleColor="white" unit="KM/H" unitColor="white" valueColor="white" GridPane.rowIndex="1" />
-            <LineChart GridPane.columnIndex="1">
+            <LineChart maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
               </xAxis>
               <yAxis>
-                <NumberAxis side="LEFT" />
+                <NumberAxis prefHeight="289.0" prefWidth="31.0" side="LEFT" />
               </yAxis>
+               <GridPane.margin>
+                  <Insets bottom="10.0" right="10.0" top="10.0" />
+               </GridPane.margin>
             </LineChart>
             <GridPane>
               <columnConstraints>
@@ -69,26 +69,158 @@
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
               <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Start" GridPane.rowIndex="2" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop" GridPane.rowIndex="3" />
-                  <Slider blockIncrement="1.0" majorTickUnit="1.0" max="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="1">
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Start" GridPane.rowIndex="1" />
+                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop" GridPane.rowIndex="2" />
+                  <Slider blockIncrement="1.0" majorTickUnit="1.0" max="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="3">
                      <padding>
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Slider>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Set speed" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Vehicle speed" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="15.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets left="10.0" right="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <JFXToggleButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@../Theme/modena_dark.css" text=" " toggleColor="#004f8e" toggleLineColor="#4abbe8" GridPane.rowIndex="4" />
+                  <Label layoutX="268.0" layoutY="86.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Start vehicle" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label layoutX="268.0" layoutY="86.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Stop vehicle" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label layoutX="258.0" layoutY="218.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Manual mode" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Vehicle controls:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+            </GridPane>
+            <GridPane layoutX="10.0" layoutY="10.0" GridPane.rowIndex="1">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="218.0" minWidth="10.0" prefWidth="176.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="153.0" minWidth="10.0" prefWidth="117.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Heading" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label layoutX="268.0" layoutY="86.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Speed" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label layoutX="268.0" layoutY="86.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Acceleration" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="96.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Vehicle information:">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="30.0" layoutY="96.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="96.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="KM/H" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="30.0" layoutY="162.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="162.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="KM/H^2" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="30.0" layoutY="228.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </GridPane.margin>
+                  </Label>
+                  <Label layoutX="30.0" layoutY="228.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Degrees" GridPane.columnIndex="2" GridPane.rowIndex="3">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <GridPane.margin>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </Label>
                </children>
