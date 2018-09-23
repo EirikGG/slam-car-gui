@@ -1,11 +1,9 @@
-package GUI.Controller.ControlSys;
+package sdv.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-
-import java.io.File;
 
 
 public class ControlSys {
@@ -15,24 +13,25 @@ public class ControlSys {
     public ControlSys() {
     }
 
+    /**
+     * Handles what happens when the start button.
+     */
     @FXML private void handleStartBtnAction() {
         playVideo();
     }
 
     private void playVideo() {
 
-        // Loads Video from file.
-        Media media = new Media(getClass().getResource("../../Video/dummyVideo.mp4").toExternalForm());
+        // Loads video from file.
+        Media media = new Media(getClass().getResource("../video/dummyVideo.mp4").toExternalForm());
 
-        // Adds Video to .
+        // Adds video to media player.
         MediaPlayer player = new MediaPlayer(media);
 
-        // Adds the Video.
+        // Adds the video.
         this.mediaView.setMediaPlayer(player);
 
-        // Plays the Video.
+        // Plays the video.
         player.play();
     }
-
-
 }

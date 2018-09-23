@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.WorldMapView?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1400.0" stylesheets="@../Theme/modena_dark.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.Controller.ControlSys.ControlSys">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1400.0" stylesheets="@../theme/modena_dark.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdv.gui.controller.ControlSys">
    <children>
       <GridPane layoutX="315.0" layoutY="166.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -37,9 +37,9 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <MediaView fx:id="mediaView" fitHeight="300.0" fitWidth="400.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <MediaView fx:id="mediaView" fitHeight="340.0" fitWidth="450.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
                      <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" />
                      </GridPane.margin></MediaView>
                   <ScatterChart GridPane.columnIndex="1">
                     <xAxis>
@@ -49,8 +49,11 @@
                       <NumberAxis side="LEFT" />
                     </yAxis>
                      <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets bottom="10.0" right="10.0" />
                      </GridPane.margin>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
                   </ScatterChart>
                </children>
             </GridPane>
@@ -69,7 +72,7 @@
                <children>
                   <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleStartBtnAction" text="Start" GridPane.rowIndex="1" />
                   <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop" GridPane.rowIndex="2" />
-                  <Slider blockIncrement="1.0" majorTickUnit="1.0" max="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="3">
+                  <Slider blockIncrement="1.0" majorTickUnit="1.0" max="3.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" min="1.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="1.0" GridPane.rowIndex="3">
                      <padding>
                         <Insets left="10.0" right="10.0" />
                      </padding>
@@ -82,23 +85,7 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <JFXToggleButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@../Theme/modena_dark.css" text=" " toggleColor="#004f8e" toggleLineColor="#4abbe8" GridPane.rowIndex="4" />
-                  <Label layoutX="268.0" layoutY="86.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Start vehicle" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </GridPane.margin>
-                  </Label>
-                  <Label layoutX="268.0" layoutY="86.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Stop vehicle" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                     <font>
-                        <Font size="15.0" />
-                     </font>
-                     <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </GridPane.margin>
-                  </Label>
+                  <JFXToggleButton maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" stylesheets="@../theme/modena_dark.css" text=" " toggleColor="#004f8e" toggleLineColor="#2a84a8" GridPane.rowIndex="4" />
                   <Label layoutX="258.0" layoutY="218.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Manual mode" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <font>
                         <Font size="15.0" />
@@ -221,7 +208,7 @@
             </GridPane>
             <WorldMapView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
                <GridPane.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets right="10.0" top="10.0" />
                </GridPane.margin>
             </WorldMapView>
          </children>
