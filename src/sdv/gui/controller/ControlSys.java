@@ -2,7 +2,7 @@ package sdv.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import sdv.communication.Webcamera;
+import sdv.communication.webcamera.Webcamera;
 
 
 public class ControlSys{
@@ -21,11 +21,16 @@ public class ControlSys{
     }
 
     @FXML private void doHandleVideoStart() {
-        this.webcam = new Webcamera(this.imageView);
+        try {
+            this.webcam = new Webcamera(this.imageView);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        this.webcam.setStopRead(false);
         this.webcam.start();
     }
 
     @FXML private void doHandleVideoStopp() {
-        this.webcam.setCamStop(true);
+        this.webcam.setStopRead(true);
     }
 }
