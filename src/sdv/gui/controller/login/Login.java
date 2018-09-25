@@ -1,4 +1,4 @@
-package GUI.Controller.Login;
+package sdv.gui.controller.login;
 
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import static GUI.SdcStart.sceneTitle;
+import static sdv.gui.SdcGuiStart.sceneTitle;
 
 /**
  * Controls login screen, gets credentials and changes screen.
@@ -63,9 +63,9 @@ public class Login {
 
         try {
             // Gets the new root from FXML file.
-            Parent root = FXMLLoader.load(getClass().getResource("../../Scenes/ControlSys.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("../../scenes/ControlSys.fxml"));
 
-            // Scenes size.
+            // scenes size.
             int width = 1400;
             int height = 700;
 

@@ -1,4 +1,4 @@
-package GUI.Controller.Login;
+package sdv.gui.controller.login;
 
 import java.util.HashMap;
 
