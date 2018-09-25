@@ -1,9 +1,8 @@
-package sdv.communication;
+package sdv.com;
 
 /**
  * @author: Eirik G. Gustafsson
  * @version: 23.09.2018.
  */
-public class MapPosition {
-
+public class LidarPoints {
 }

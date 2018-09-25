@@ -2,35 +2,39 @@ package sdv.gui.controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
-import sdv.communication.webcamera.Webcamera;
+import sdv.coupling.CommunicationIn;
 
+/**
+ * Controls the control system GUI screen.
+ */
+public class ControlSys extends Thread {
+    // Interface for incoming communication.
+    private CommunicationIn communicationIn;
 
-public class ControlSys extends Thread{
     // GUI's ImageView, to display the images.
     @FXML private ImageView imageView;
-    // Webcamera reader class.
-    private Webcamera webCam;
 
     public ControlSys() {
+        this.communicationIn = new CommunicationIn();
     }
 
     /**
-     * Handles what happens when the start button.
+     * Handles what happens when the start button is pressed.
      */
     @FXML private void handleStartBtnAction() {
     }
 
-    @FXML private synchronized void doHandleVideoStart() throws Exception {
-            doStartWebCam();
-            this.webCam.setStopp(false);
+    /**
+     * Handles what happens when the start video button is pressed.
+     */
+    @FXML private synchronized void doHandleVideoStart() {
+        this.communicationIn.doStartWebCam(this.imageView);
     }
 
+    /**
+     * Handles what happens when the stop video button is pressed.
+     */
     @FXML private void doHandleVideoStop() {
-        this.webCam.setStopp(true);
-    }
-
-    private void doStartWebCam() throws Exception {
-        this.webCam = new Webcamera(this.imageView);
-        this.webCam.start();
+        this.communicationIn.doStopWebCam();
     }
 }
