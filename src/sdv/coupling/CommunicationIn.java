@@ -35,6 +35,7 @@ public class CommunicationIn {
             e.printStackTrace();
         }
         this.webCam = new WebCam(imageViewer, ipAddress, 1235);
+        this.webCam.setDaemon(true);
         this.webCam.start();
     }
 

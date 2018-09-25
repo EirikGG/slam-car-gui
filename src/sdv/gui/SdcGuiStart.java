@@ -12,7 +12,7 @@ import javafx.stage.Stage;
  * @author Eirik G. Gustafsson
  * @version 20.09.2018
  */
-public class SdcStart extends Application {
+public class SdcGuiStart extends Application {
     // Scene title.
     public static String sceneTitle = "Autonomous car 3000";
 

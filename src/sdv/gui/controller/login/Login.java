@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import static sdv.gui.SdcStart.sceneTitle;
+import static sdv.gui.SdcGuiStart.sceneTitle;
 
 /**
  * Controls login screen, gets credentials and changes screen.

@@ -7,15 +7,19 @@ import sdv.coupling.CommunicationIn;
 /**
  * Controls the control system GUI screen.
  */
-public class ControlSys extends Thread {
+public class ControlSys {
     // Interface for incoming communication.
     private CommunicationIn communicationIn;
 
     // GUI's ImageView, to display the images.
     @FXML private ImageView imageView;
 
-    public ControlSys() {
+    /**
+     * Using initialise instead of constructor since this is called after FXML fields are populated.
+     */
+    public void initialize() {
         this.communicationIn = new CommunicationIn();
+        doHandleVideoStart();
     }
 
     /**
