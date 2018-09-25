@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="Medusa-8.0">
+  <library name="bridj-0.7.0">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/Medusa-8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/bridj-0.7.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
