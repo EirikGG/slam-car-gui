@@ -1,33 +1,31 @@
 package sdv.gui.controller;
 
-import com.github.sarxos.webcam.Webcam;
-import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+import sdv.communication.Webcamera;
 
 
 public class ControlSys{
-    // Computers webcamera.
+    // GUI's ImageView, to display the images.
     @FXML private ImageView imageView;
-    // Image from web-cam.
-    private BufferedImage grabbedImage;
-    // Stop camera flag.
-    private boolean stopCamera = false;
+    // Webcamera reader class.
+    private Webcamera webcam;
 
-    public ControlSys() {}
+    public ControlSys() {
+    }
 
     /**
      * Handles what happens when the start button.
      */
-    @FXML private void handleStartBtnAction() throws IOException {
-        Webcam webcam = Webcam.getWebcams().get(1);
-        webcam.open();
-        BufferedImage bufferedImage = webcam.getImage();
-        Image image = SwingFXUtils.toFXImage(bufferedImage, null);
-        this.imageView.setImage(image);
+    @FXML private void handleStartBtnAction() {
+    }
+
+    @FXML private void doHandleVideoStart() {
+        this.webcam = new Webcamera(this.imageView);
+        this.webcam.start();
+    }
+
+    @FXML private void doHandleVideoStopp() {
+        this.webcam.setCamStop(true);
     }
 }

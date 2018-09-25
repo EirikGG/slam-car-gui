@@ -14,7 +14,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-<?import org.controlsfx.control.WorldMapView?>
 
 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1400.0" stylesheets="@../theme/modena_dark.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdv.gui.controller.ControlSys">
    <children>
@@ -24,20 +23,20 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="905.0" minWidth="10.0" prefWidth="866.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="345.0" minHeight="10.0" prefHeight="311.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="389.0" minHeight="10.0" prefHeight="389.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
             <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
               <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.0" minWidth="10.0" prefWidth="318.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="607.0" minWidth="10.0" prefWidth="587.0" />
               </columnConstraints>
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <ScatterChart GridPane.columnIndex="1">
+                  <ScatterChart prefHeight="340.0" prefWidth="510.0" GridPane.columnIndex="1">
                     <xAxis>
                       <CategoryAxis side="BOTTOM" />
                     </xAxis>
@@ -51,10 +50,29 @@
                         <Insets />
                      </opaqueInsets>
                   </ScatterChart>
-                  <ImageView fx:id="imageView" fitHeight="350.0" fitWidth="454.0" pickOnBounds="true" preserveRatio="true" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                  <GridPane>
+                    <columnConstraints>
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="262.0" minWidth="10.0" prefWidth="228.0" />
+                      <ColumnConstraints hgrow="SOMETIMES" maxWidth="251.0" minWidth="10.0" prefWidth="225.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="304.0" minHeight="10.0" prefHeight="279.0" vgrow="SOMETIMES" />
+                      <RowConstraints maxHeight="169.0" minHeight="10.0" prefHeight="55.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                     <children>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStart" text="Start" GridPane.rowIndex="2" />
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStopp" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <ImageView fx:id="imageView" fitHeight="277.0" fitWidth="316.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Label text="Web-cam:">
+                           <font>
+                              <Font size="18.0" />
+                           </font></Label>
+                     </children>
                      <GridPane.margin>
                         <Insets bottom="10.0" />
-                     </GridPane.margin></ImageView>
+                     </GridPane.margin>
+                  </GridPane>
                </children>
             </GridPane>
             <GridPane>
@@ -114,7 +132,7 @@
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="159.0" minWidth="10.0" prefWidth="159.0" />
                </columnConstraints>
                <rowConstraints>
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="43.0" minHeight="10.0" prefHeight="43.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -203,14 +221,9 @@
                   </Label>
                </children>
                <padding>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets bottom="10.0" left="10.0" right="10.0" />
                </padding>
             </GridPane>
-            <WorldMapView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1">
-               <GridPane.margin>
-                  <Insets right="10.0" top="10.0" />
-               </GridPane.margin>
-            </WorldMapView>
          </children>
       </GridPane>
    </children>
