@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class Webcamera extends Thread {
     // True to stop reading, false to continue.
-    private boolean stopRead;
+    private boolean stopp;
     // ImageView to draw images to.
     private ImageView imageView;
     // Read from datagram socket.
@@ -21,17 +21,18 @@ public class Webcamera extends Thread {
 
     /**
      * Setup for class set imageView and a port.
+     *
      * @param imageView Image view to display image.
      */
     public Webcamera(ImageView imageView) throws Exception {
-        this.stopRead = false;
+        this.stopp = false;
         this.imageView = imageView;
         this.readSocket = new ReadSocket();
     }
 
 
-    public void run(){
-        while (!this.stopRead) {
+    public synchronized void run() {
+        while (!stopp) {
             Image img = null;
 
             try {
@@ -39,12 +40,12 @@ public class Webcamera extends Thread {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             this.imageView.setImage(img);
         }
+        this.readSocket.doCloseSocket();
     }
 
-    public void setStopRead(boolean stopRead) {
-        this.stopRead = stopRead;
+    public void setStopp(boolean stopp) {
+        this.stopp = stopp;
     }
 }

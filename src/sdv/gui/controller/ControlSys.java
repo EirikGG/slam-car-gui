@@ -5,11 +5,11 @@ import javafx.scene.image.ImageView;
 import sdv.communication.webcamera.Webcamera;
 
 
-public class ControlSys{
+public class ControlSys extends Thread{
     // GUI's ImageView, to display the images.
     @FXML private ImageView imageView;
     // Webcamera reader class.
-    private Webcamera webcam;
+    private Webcamera webCam;
 
     public ControlSys() {
     }
@@ -20,17 +20,17 @@ public class ControlSys{
     @FXML private void handleStartBtnAction() {
     }
 
-    @FXML private void doHandleVideoStart() {
-        try {
-            this.webcam = new Webcamera(this.imageView);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        this.webcam.setStopRead(false);
-        this.webcam.start();
+    @FXML private synchronized void doHandleVideoStart() throws Exception {
+            doStartWebCam();
+            this.webCam.setStopp(false);
     }
 
-    @FXML private void doHandleVideoStopp() {
-        this.webcam.setStopRead(true);
+    @FXML private void doHandleVideoStop() {
+        this.webCam.setStopp(true);
+    }
+
+    private void doStartWebCam() throws Exception {
+        this.webCam = new Webcamera(this.imageView);
+        this.webCam.start();
     }
 }

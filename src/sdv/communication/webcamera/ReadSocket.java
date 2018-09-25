@@ -80,7 +80,7 @@ public class ReadSocket {
     }
 
     /**
-     * Sets the ipAddress.
+     * Setup's the socket.
      * @throws UnknownHostException Don't know the host address.
      */
     private void doSetupSocket() throws UnknownHostException, SocketException {
@@ -88,5 +88,12 @@ public class ReadSocket {
 
         this.socket = new DatagramSocket(1234);
         this.socket.connect(ipAddress, 1235);
+    }
+
+    /**
+     * Disconnects and closes the socket.
+     */
+    public void doCloseSocket() {
+        this.socket.close();
     }
 }

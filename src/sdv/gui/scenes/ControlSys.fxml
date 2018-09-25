@@ -62,7 +62,7 @@
                     </rowConstraints>
                      <children>
                         <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStart" text="Start" GridPane.rowIndex="2" />
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStopp" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStop" text="Stop" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <ImageView fx:id="imageView" fitHeight="277.0" fitWidth="316.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Label text="Web-cam:">
                            <font>
