@@ -1,4 +1,4 @@
-package sdv.com.webcamera;
+package sdv.functions.webcamera;
 
 import javafx.scene.image.ImageView;
 

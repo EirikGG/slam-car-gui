@@ -1,7 +1,7 @@
 package sdv.coupling;
 
 import javafx.scene.image.ImageView;
-import sdv.com.webcamera.WebCam;
+import sdv.functions.webcamera.WebCam;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
