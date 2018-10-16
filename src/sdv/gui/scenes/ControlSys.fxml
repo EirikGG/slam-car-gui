@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1400.0" stylesheets="@../theme/modena_dark.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdv.gui.controller.ControlSys.ControlSys">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="700.0" prefWidth="1400.0" stylesheets="@../theme/modena_dark.css" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdv.gui.controller.control.sys.ControlSys">
    <children>
       <GridPane layoutX="315.0" layoutY="166.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
@@ -49,7 +49,7 @@
                         <ImageView fx:id="imageView" fitHeight="277.0" fitWidth="316.0" pickOnBounds="true" preserveRatio="true" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Label text="Web-cam:">
                            <font>
-                              <Font size="18.0" />
+                              <Font size="20.0" />
                            </font></Label>
                      </children>
                      <GridPane.margin>
@@ -97,7 +97,7 @@
                   </Label>
                   <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Vehicle controls:">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="20.0" />
                      </font>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -148,10 +148,10 @@
                   </Label>
                   <Label layoutX="30.0" layoutY="96.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Vehicle information:">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="20.0" />
                      </font>
                      <GridPane.margin>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets left="10.0" top="10.0" />
                      </GridPane.margin>
                   </Label>
                   <Label alignment="CENTER_RIGHT" layoutX="30.0" layoutY="96.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
