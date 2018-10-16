@@ -36,7 +36,7 @@
                   <ValidationFacade alignment="CENTER_LEFT" prefHeight="233.0" prefWidth="438.0" GridPane.columnIndex="1">
                      <children>
                             <JFXTextField fx:id="usernameField" labelFloat="true" onAction="#handleLoginBtn" prefHeight="25.0" prefWidth="295.0" promptText="Username" />
-                        <JFXPasswordField fx:id="passwordField" onAction="#handleLoginBtn" promptText="Pasword" />
+                        <JFXPasswordField fx:id="passwordField" onAction="#handleLoginBtn" promptText="Password" />
                         <Label fx:id="warningLabel" maxWidth="1.7976931348623157E308" prefHeight="29.0" prefWidth="410.0" />
                      </children>
                      <GridPane.margin>
