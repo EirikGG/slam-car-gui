@@ -13,7 +13,7 @@ public class ControlSys {
     // Interface for incoming communication.
     private CommunicationIn communicationIn;
     // Handles button events.
-    private ButtonEvent btnEvent;
+    private HandleKeyboardInput btnEvent;
     // Holds status of manual mode button.
     @FXML private JFXToggleButton manualMode;
 
@@ -26,7 +26,7 @@ public class ControlSys {
     public void initialize() {
         this.communicationIn = new CommunicationIn();
         doHandleVideoStart();
-        this.btnEvent = new ButtonEvent();
+        this.btnEvent = new HandleKeyboardInput();
     }
 
     /**

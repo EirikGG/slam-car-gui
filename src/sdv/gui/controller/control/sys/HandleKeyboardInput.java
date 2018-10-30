@@ -7,7 +7,7 @@ import javafx.scene.input.KeyEvent;
  * @author Eirik G. Gustafsson
  * @version 16.10.2018.
  */
-public class ButtonEvent {
+public class HandleKeyboardInput {
     // Holds last key press.
     private boolean upPress, downPress, rightPress, leftPress = false;
 
