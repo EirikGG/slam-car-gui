@@ -12,14 +12,14 @@ import java.net.UnknownHostException;
  * @author Eirik G. Gustafsson
  * @version 23.09.2018.
  */
-public class CommunicationIn {
+public class CommIn {
     // Reads from web-cam server.
     private WebCam webCam;
 
     /**
      * Initial values.
      */
-    public CommunicationIn() {
+    public CommIn() {
         this.webCam = null;
     }
 

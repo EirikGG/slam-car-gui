@@ -2,6 +2,7 @@ package sdv.gui.controller.control.sys;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import sdv.coupling.CommOut;
 
 /**
  * Handles arrow key inputs from user, to manually control car.
@@ -10,8 +11,19 @@ import javafx.scene.input.KeyEvent;
  * @version 16.10.2018.
  */
 public class HandleKeyboardInput {
+    // Interface to communicate with motor controllers.
+    private CommOut commOut;
     // Holds last key press.
     private boolean upPress, downPress, rightPress, leftPress = false;
+
+    /**
+     * Setts interface for outgoing communication.
+     *
+     * @param commOut Interface for outgoing communication.
+     */
+    public HandleKeyboardInput(CommOut commOut) {
+        this.commOut = commOut;
+    }
 
     /**
      * Checks if key is pressed or released, and handles event.
@@ -37,20 +49,20 @@ public class HandleKeyboardInput {
     private void doHandleKeyPress(KeyCode code) {
 
         if((KeyCode.UP == code) && (!this.upPress) && (!this.downPress)) {
-            System.out.println("Up pressed");
             this.upPress = true;
+            this.commOut.doSendMotorInstructions("Drive");
 
         } else if ((KeyCode.DOWN == code) && (!this.downPress) && (!this.upPress)) {
-            System.out.println("Down pressed");
             this.downPress = true;
+            this.commOut.doSendMotorInstructions("Drive backwards");
 
         } else if ((KeyCode.LEFT == code) && (!this.leftPress) && (!this.rightPress)) {
-            System.out.println("Left pressed");
             this.leftPress = true;
+            this.commOut.doSendMotorInstructions("Turn left");
 
         } else if ((KeyCode.RIGHT == code) && (!this.rightPress) && (!this.leftPress)) {
-            System.out.println("Right pressed");
             this.rightPress = true;
+            this.commOut.doSendMotorInstructions("Turn right");
         }
     }
 
@@ -62,20 +74,20 @@ public class HandleKeyboardInput {
     private void doHandleKeyRelease(KeyCode code) {
 
         if((KeyCode.UP == code) && (!this.downPress)) {
-            System.out.println("Up released");
             this.upPress = false;
+            this.commOut.doSendMotorInstructions("Stop going");
 
         } else if ((KeyCode.DOWN == code) && (!this.upPress)) {
-            System.out.println("Down released");
             this.downPress = false;
+            this.commOut.doSendMotorInstructions("Stop going backwards");
 
         } else if ((KeyCode.LEFT == code) && (!this.rightPress)) {
-            System.out.println("Left released");
             this.leftPress = false;
+            this.commOut.doSendMotorInstructions("Straighten up");
 
         } else if ((KeyCode.RIGHT == code) && (!this.leftPress)) {
-            System.out.println("Right released");
             this.rightPress = false;
+            this.commOut.doSendMotorInstructions("Straighten up");
         }
     }
 }

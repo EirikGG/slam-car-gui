@@ -4,14 +4,17 @@ import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
-import sdv.coupling.CommunicationIn;
+import sdv.coupling.CommIn;
+import sdv.coupling.CommOut;
 
 /**
  * Controls the control system GUI screen.
  */
 public class ControlSys {
     // Interface for incoming communication.
-    private CommunicationIn communicationIn;
+    private CommIn commIn;
+    // Interface for outgoing communication.
+    private CommOut commOut;
     // Handles button events.
     private HandleKeyboardInput btnEvent;
     // Holds status of manual mode button.
@@ -24,9 +27,10 @@ public class ControlSys {
      * Using initialise instead of constructor since this is called after FXML fields are populated.
      */
     public void initialize() {
-        this.communicationIn = new CommunicationIn();
+        this.commIn = new CommIn();
+        this.commOut = new CommOut();
         doHandleVideoStart();
-        this.btnEvent = new HandleKeyboardInput();
+        this.btnEvent = new HandleKeyboardInput(this.commOut);
     }
 
     /**
@@ -39,14 +43,14 @@ public class ControlSys {
      * Handles what happens when the start video button is pressed.
      */
     @FXML private void doHandleVideoStart() {
-        this.communicationIn.doStartWebCam(this.imageView);
+        this.commIn.doStartWebCam(this.imageView);
     }
 
     /**
      * Handles what happens when the stop video button is pressed.
      */
     @FXML private void doHandleVideoStop() {
-        this.communicationIn.doStopWebCam();
+        this.commIn.doStopWebCam();
     }
 
     /**
