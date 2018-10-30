@@ -28,16 +28,11 @@ public class ImageDrawer {
 
     /**
      * Takes a buffered image and draws it to the ImageView.
+     *
+     * @param img Image to show user.
      */
     public void drawImage(BufferedImage img) {
-        draw(doChangeImage(img));
-    }
-
-    /**
-     * Draws the image on the ImageView.
-     */
-    private void draw(Image img) {
-        this.imageView.setImage(img);
+        this.imageView.setImage(doChangeImage(img));
     }
 
     /**

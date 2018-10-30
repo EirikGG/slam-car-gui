@@ -25,6 +25,8 @@ public class CommunicationIn {
 
     /**
      * Initialises the web cam stream and draws images to ImageViewer.
+     *
+     * @param imageViewer Gui's image viewer, to display video feed.
      */
     public void doStartWebCam(ImageView imageViewer) {
         // Ip for WebCam server.

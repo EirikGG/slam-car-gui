@@ -52,7 +52,7 @@ public class ControlSys {
     /**
      * Handles button events.
      *
-     * @param event Key pressed/ released event.
+     * @param event Key pressed or released event.
      */
     @FXML private void doHandleKeyInput(KeyEvent event) {
         if (this.manualMode.isSelected())

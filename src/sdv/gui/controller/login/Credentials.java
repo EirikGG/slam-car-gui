@@ -51,12 +51,13 @@ public class Credentials {
     }
 
     /**
-     * Fills the hashmap with passwords and usernames.
+     * Fills the HashMap with passwords and username's.
      */
     private void doFillCredentials() {
         this.credentials.put("Vebjørn", "admin");
         this.credentials.put("Ole", "admin");
         this.credentials.put("Sivert", "admin");
         this.credentials.put("Eirik", "admin");
+        this.credentials.put("admin", "admin");
     }
 }

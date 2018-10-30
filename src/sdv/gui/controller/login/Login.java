@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import sdv.gui.SdcGuiStart;
 
 import static sdv.gui.SdcGuiStart.sceneTitle;
 
@@ -30,12 +31,15 @@ public class Login {
     @FXML private JFXPasswordField passwordField;
     // Message label.
     @FXML private Label warningLabel;
+    // Title label.
+    @FXML private Label titleLabel;
 
     /**
      * Creates an instance of credentials.
      */
-    public Login() {
+    public void initialize() {
         this.credentials = new Credentials();
+        this.titleLabel.setText(SdcGuiStart.sceneTitle);
     }
 
     /**
@@ -57,6 +61,11 @@ public class Login {
     }
 
 
+    /**
+     * Changes scene from Login to ControlSys.
+     *
+     * @param event User presses login button or enter.
+     */
     private void doChangeScene(ActionEvent event) {
         // Gets the stage from the event.
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

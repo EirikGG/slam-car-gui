@@ -50,7 +50,7 @@
                   <Insets right="10.0" />
                </padding>
                <children>
-                  <Label alignment="CENTER_RIGHT" text="Autonomous car 3000">
+                  <Label fx:id="titleLabel" alignment="CENTER_RIGHT">
                      <font>
                         <Font size="60.0" />
                      </font>

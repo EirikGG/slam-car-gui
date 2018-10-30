@@ -4,6 +4,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 /**
+ * Handles arrow key inputs from user, to manually control car.
+ *
  * @author Eirik G. Gustafsson
  * @version 16.10.2018.
  */

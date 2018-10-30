@@ -24,9 +24,4 @@ public class SdcGuiStart extends Application {
         primaryStage.setScene(new Scene(root, 700, 400));
         primaryStage.show();
     }
-
-
-    public static void main(String[] args) {
-        launch(args);
-    }
 }
