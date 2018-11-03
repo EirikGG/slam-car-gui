@@ -1,11 +1,11 @@
 package sdv.gui.controller.control.sys;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import sdv.coupling.CommOut;
 
 /**
- * Handles arrow key inputs from user, to manually control car.
+ * Handles arrow key inputs from user, to manually control car. Can only use on key at the time, pressed key has to be
+ * released before next key can be pressed.
  *
  * @author Eirik G. Gustafsson
  * @version 16.10.2018.
@@ -13,8 +13,8 @@ import sdv.coupling.CommOut;
 public class HandleKeyboardInput {
     // Interface to communicate with motor controllers.
     private CommOut commOut;
-    // Holds last key press.
-    private boolean upPress, downPress, rightPress, leftPress = false;
+    // String name of active key.
+    private String activeKey;
 
     /**
      * Setts interface for outgoing communication.
@@ -23,71 +23,39 @@ public class HandleKeyboardInput {
      */
     public HandleKeyboardInput(CommOut commOut) {
         this.commOut = commOut;
+        this.activeKey = "";
     }
 
     /**
      * Checks if key is pressed or released, and handles event.
      *
-     * @param event Key pressed or released event.
+     * @param event Key event.
      */
-    public void doHandleKeyInput(KeyEvent event) {
-        // String description of event.
-        String eventType = event.getEventType().getName();
+    public void doHandleKeyEvent(KeyEvent event) {
+        // Code of button event.
+        String keyEvent = event.getEventType().toString().toUpperCase();
+        // Event type(press of release).
+        String keyName = event.getCode().toString().toUpperCase();
 
-        if (eventType.equals("KEY_PRESSED")) {
-            doHandleKeyPress(event.getCode());
-        } else if (eventType.equals(("KEY_RELEASED"))) {
-            doHandleKeyRelease(event.getCode());
+        // Activate a key if no other key is active.
+        if (keyEvent.equals("KEY_PRESSED") && this.activeKey.equals("")) {
+            this.activeKey = keyName;
+            doSendKeyInfo(keyEvent, keyName);
+
+        // Releases a key if the released key equals the last active key.
+        } else if (keyEvent.equals("KEY_RELEASED") && keyName.equals(this.activeKey)) {
+            doSendKeyInfo(keyEvent, keyName);
+            this.activeKey = "";
         }
     }
 
     /**
-     * Handles key press.
+     * Sends key events to class containing TCP socket for further communication.
      *
-     * @param code Which key is pressed.
+     * @param keyEvent KEY_RELEASED or KEY_PRESSED.
+     * @param keyName Name of key used, can be: UP, DOWN, LEFT or RIGHT.
      */
-    private void doHandleKeyPress(KeyCode code) {
-
-        if((KeyCode.UP == code) && (!this.upPress) && (!this.downPress)) {
-            this.upPress = true;
-            this.commOut.doSendMotorInstructions("Drive");
-
-        } else if ((KeyCode.DOWN == code) && (!this.downPress) && (!this.upPress)) {
-            this.downPress = true;
-            this.commOut.doSendMotorInstructions("Drive backwards");
-
-        } else if ((KeyCode.LEFT == code) && (!this.leftPress) && (!this.rightPress)) {
-            this.leftPress = true;
-            this.commOut.doSendMotorInstructions("Turn left");
-
-        } else if ((KeyCode.RIGHT == code) && (!this.rightPress) && (!this.leftPress)) {
-            this.rightPress = true;
-            this.commOut.doSendMotorInstructions("Turn right");
-        }
-    }
-
-    /**
-     * Handles key release.
-     *
-     * @param code Which key is pressed.
-     */
-    private void doHandleKeyRelease(KeyCode code) {
-
-        if((KeyCode.UP == code) && (!this.downPress)) {
-            this.upPress = false;
-            this.commOut.doSendMotorInstructions("Stop going");
-
-        } else if ((KeyCode.DOWN == code) && (!this.upPress)) {
-            this.downPress = false;
-            this.commOut.doSendMotorInstructions("Stop going backwards");
-
-        } else if ((KeyCode.LEFT == code) && (!this.rightPress)) {
-            this.leftPress = false;
-            this.commOut.doSendMotorInstructions("Straighten up");
-
-        } else if ((KeyCode.RIGHT == code) && (!this.leftPress)) {
-            this.rightPress = false;
-            this.commOut.doSendMotorInstructions("Straighten up");
-        }
+    private void doSendKeyInfo(String keyEvent, String keyName) {
+        this.commOut.doSendKeyPress(keyEvent, keyName);
     }
 }

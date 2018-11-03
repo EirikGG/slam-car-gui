@@ -60,6 +60,6 @@ public class ControlSys {
      */
     @FXML private void doHandleKeyInput(KeyEvent event) {
         if (this.manualMode.isSelected())
-            this.btnEvent.doHandleKeyInput(event);
+            this.btnEvent.doHandleKeyEvent(event);
     }
 }

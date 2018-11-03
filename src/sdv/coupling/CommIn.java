@@ -32,7 +32,7 @@ public class CommIn {
         // Ip for WebCam server.
         InetAddress ipAddress = null;
         try {
-            ipAddress = InetAddress.getLocalHost();
+            ipAddress = InetAddress.getByName("192.168.0.100");
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
