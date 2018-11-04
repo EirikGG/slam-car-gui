@@ -2,6 +2,7 @@ package sdv.gui.controller.control.sys;
 
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
+import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import sdv.coupling.CommIn;
@@ -16,10 +17,11 @@ public class ControlSys {
     // Interface for outgoing communication.
     private CommOut commOut;
     // Handles button events.
-    private HandleKeyboardInput btnEvent;
+    private KeyboardInput btnEvent;
     // Holds status of manual mode button.
     @FXML private JFXToggleButton manualMode;
-
+    // GUI's slider.
+    @FXML private Slider slider;
     // GUI's ImageView, to display the images.
     @FXML private ImageView imageView;
 
@@ -30,7 +32,7 @@ public class ControlSys {
         this.commIn = new CommIn();
         this.commOut = new CommOut();
         doHandleVideoStart();
-        this.btnEvent = new HandleKeyboardInput(this.commOut);
+        this.btnEvent = new KeyboardInput();
     }
 
     /**
@@ -54,12 +56,22 @@ public class ControlSys {
     }
 
     /**
-     * Handles button events.
+     * Send string if it is not "".
      *
      * @param event Key pressed or released event.
      */
     @FXML private void doHandleKeyInput(KeyEvent event) {
-        if (this.manualMode.isSelected())
-            this.btnEvent.doHandleKeyEvent(event);
+        if (this.manualMode.isSelected()) {
+            String str = this.btnEvent.doHandleKeyEvent(event);
+            if (!str.equals("")) {
+                this.commOut.doSendMotorControllerString(str);
+            }
+        }
+    }
+
+    @FXML private void doHandleSliderInput() {
+        Double value = this.slider.getValue();
+        int number = value.intValue();
+        this.commOut.doSendMotorControllerString("SPEED:" + number);
     }
 }
