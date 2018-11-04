@@ -2,11 +2,6 @@ package sdv.coupling;
 
 import sdv.comm.TcpSocket;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.net.Socket;
-
 /**
  * Interface for communication the gui is sending "out".
  *
@@ -15,32 +10,24 @@ import java.net.Socket;
  */
 public class CommOut {
     // Socket for communicating with motor controller.
-    private Socket motorController;
-    // Writer for socket comm.
-    private BufferedWriter writer;
+    private TcpSocket motorController;
 
     /**
      * Creates new socket and defines the addresses.
      */
     public CommOut() {
-        this.motorController = new TcpSocket();
-        try {
-            this.writer = new BufferedWriter(new OutputStreamWriter(this.motorController.getOutputStream()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        this.motorController = new TcpSocket("192.168.0.110", 8000);
     }
 
     /**
-     * Sends inputted String trough socket.
+     * Sends strings to motor controller class.
      *
-     * @param string String to send.
+     * @param str String to send.
      */
-    public void doSendMotorControllerString(String string) {
-        try {
-            this.writer.write(string);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void doSendMotorString(String str) {
+        if (!this.motorController.getIsConnected()) {
+            this.motorController.doConnectSocket();
         }
+        this.motorController.doWriteString(str);
     }
 }

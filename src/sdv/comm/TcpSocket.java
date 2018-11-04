@@ -1,6 +1,7 @@
 package sdv.comm;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -15,38 +16,43 @@ import java.net.UnknownHostException;
 public class TcpSocket {
     // Classes tcp socket.
     private Socket socket;
-    // Sockets output stream.
+    // Writer for socket comm.
+    private PrintWriter writer;
+    // Sockets ip.
+    private String ip;
+    // Sockets port.
+    private int port;
 
     /**
      * Initializes with a new socket.
      */
-    public TcpSocket(String ip, int port, int localPort) {
+    public TcpSocket(String ip, int port) {
+        this.ip = ip;
+        this.port = port;
         this.socket = new Socket();
-        doBindSocket(localPort);
-        doConnectSocket(ip, port);
-    }
-
-    /**
-     * Binds the socket to a local port with loopback address.
-     * @param port
-     */
-    private void doBindSocket(int port) {
-        InetSocketAddress address = doCreateInetSocketAddress(null, port);
+        doConnectSocket();
         try {
-            this.socket.bind(address);
+            this.writer = new PrintWriter(this.socket.getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * Connects socket to a remote ip and port.
+     * Writes a string trough the socket.
      *
-     * @param ip Ip address of remote socket.
-     * @param port Port of remote socket.
+     * @param str String to send trough socket.
      */
-    private void doConnectSocket(String ip, int port) {
-        InetSocketAddress address = doCreateInetSocketAddress(ip, port);
+    public void doWriteString(String str) {
+        System.out.println(str); //TODO: Delete print statement.
+        this.writer.println(str);
+    }
+
+    /**
+     * Connects socket to a remote ip and port.
+     */
+    public void doConnectSocket() {
+        InetSocketAddress address = doCreateInetSocketAddress(this.ip, this.port);
         try {
             this.socket.connect(address);
         } catch (IOException e) {
@@ -70,5 +76,13 @@ public class TcpSocket {
             e.printStackTrace();
         }
         return address;
+    }
+
+    /**
+     * Returns socket's connected status.
+     * @return Socket's connected status.
+     */
+    public boolean getIsConnected() {
+        return this.socket.isConnected();
     }
 }

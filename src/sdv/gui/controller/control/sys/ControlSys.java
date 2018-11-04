@@ -64,7 +64,7 @@ public class ControlSys {
         if (this.manualMode.isSelected()) {
             String str = this.btnEvent.doHandleKeyEvent(event);
             if (!str.equals("")) {
-                this.commOut.doSendMotorControllerString(str);
+                this.commOut.doSendMotorString(str);
             }
         }
     }
@@ -72,6 +72,6 @@ public class ControlSys {
     @FXML private void doHandleSliderInput() {
         Double value = this.slider.getValue();
         int number = value.intValue();
-        this.commOut.doSendMotorControllerString("SPEED:" + number);
+        this.commOut.doSendMotorString("SPEED:" + number);
     }
 }
