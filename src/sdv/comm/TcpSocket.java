@@ -2,10 +2,7 @@ package sdv.comm;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Connects to a socket and communicates with it.
@@ -13,7 +10,7 @@ import java.net.UnknownHostException;
  * @author Eirik G. Gustafsson
  * @version 03.11.2018.
  */
-public class TcpSocket {
+public class TcpSocket extends Thread {
     // Classes tcp socket.
     private Socket socket;
     // Writer for socket comm.
@@ -22,8 +19,6 @@ public class TcpSocket {
     private String ip;
     // Sockets port.
     private int port;
-    // Socket connection timeout in milliseconds.
-    private int timeout;
 
     /**
      * Initializes with a new socket.
@@ -31,13 +26,22 @@ public class TcpSocket {
     public TcpSocket(String ip, int port) {
         this.ip = ip;
         this.port = port;
-        this.socket = new Socket();
+    }
+
+    public void run() {
+        doConnect();
+    }
+
+    /**
+     * Setts the PrintWriter field.
+     */
+    private void setPrintWriter() {
         try {
             this.writer = new PrintWriter(this.socket.getOutputStream(), true);
         } catch (IOException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
+            System.out.println("TcpSocket: Cant set PrintWriter");
         }
-        this.timeout = 1;
     }
 
     /**
@@ -47,13 +51,20 @@ public class TcpSocket {
      */
     public void doWriteString(String str) {
         System.out.println(str); //TODO: Delete print statement.
-        this.writer.println(str);
+        if (null != this.writer) {
+            this.writer.println(str);
+        } else {
+            System.out.println("TcpSocket: Cant send, PrintWriter is null");
+        }
     }
 
     /**
      * Connects socket to a remote ip and port. If a socket exists, closes that one first.
+     * @return True if connection is successful and false if not.
      */
-    public void doConnect() {
+    public boolean doConnect() {
+        boolean result = false;
+
         if (null != this.socket) {
             try {
                 this.socket.close();
@@ -62,17 +73,22 @@ public class TcpSocket {
             }
         }
 
-
-        InetSocketAddress address = doCreateInetSocketAddress(this.ip, this.port);
         try {
-            this.socket.connect(address, this.timeout);
+            this.socket = new Socket(this.ip, this.port);
+            result = true;
+
         } catch (IOException e) {
+            this.socket = null;
+            result = false;
             e.printStackTrace();
         }
+
+        setPrintWriter();
+
+        return result;
     }
 
     /**
-     * Returns connection status of socket.
      * @returns Connection status of socket.
      */
     public boolean getIsConnected() {
@@ -82,23 +98,5 @@ public class TcpSocket {
         }
 
         return isConnected;
-    }
-
-    /**
-     * Creates a InetSocketAddress.
-     *
-     * @param ip IP address.
-     * @param port Port number.
-     * @return InetSocketAddress.
-     */
-    private InetSocketAddress doCreateInetSocketAddress(String ip, int port) {
-        InetSocketAddress address = null;
-        try {
-            InetAddress inetAddress = InetAddress.getByName(ip);
-            address = new InetSocketAddress(inetAddress, port);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        return address;
     }
 }

@@ -16,7 +16,8 @@ public class CommOut {
      * Creates new socket and defines the addresses.
      */
     public CommOut() {
-        this.motorController = new TcpSocket("192.168.0.110", 8000);
+        this.motorController = new TcpSocket("192.168.0.100", 8000);
+        this.motorController.start();
     }
 
     /**
@@ -31,14 +32,7 @@ public class CommOut {
     /**
      * Reconnects the socket if the connection is broken or never connected.
      */
-    public void doConnect() {
-        this.motorController.doConnect();
-    }
-
-    /**
-     * @return Sockets connection status.
-     */
-    public boolean getIsConnected() {
-        return this.motorController.getIsConnected();
+    public boolean doConnect() {
+        return this.motorController.doConnect();
     }
 }

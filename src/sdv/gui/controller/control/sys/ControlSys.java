@@ -86,9 +86,11 @@ public class ControlSys {
      */
     @FXML private void doHandleConnectBtn() {
         this.connectBtn.setDisable(true);
-        this.commOut.doConnect();
+        boolean isConnected = this.commOut.doConnect();
 
-        if(!this.commOut.getIsConnected()) {
+        System.out.println("Is connected = " + isConnected);
+
+        if (!isConnected) {
             this.connectBtn.setDisable(false);
         }
     }
