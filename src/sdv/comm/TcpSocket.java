@@ -22,6 +22,8 @@ public class TcpSocket {
     private String ip;
     // Sockets port.
     private int port;
+    // Socket connection timeout in milliseconds.
+    private int timeout;
 
     /**
      * Initializes with a new socket.
@@ -30,12 +32,12 @@ public class TcpSocket {
         this.ip = ip;
         this.port = port;
         this.socket = new Socket();
-        doConnectSocket();
         try {
             this.writer = new PrintWriter(this.socket.getOutputStream(), true);
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.timeout = 1;
     }
 
     /**
@@ -49,15 +51,37 @@ public class TcpSocket {
     }
 
     /**
-     * Connects socket to a remote ip and port.
+     * Connects socket to a remote ip and port. If a socket exists, closes that one first.
      */
-    public void doConnectSocket() {
+    public void doConnect() {
+        if (null != this.socket) {
+            try {
+                this.socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         InetSocketAddress address = doCreateInetSocketAddress(this.ip, this.port);
         try {
-            this.socket.connect(address);
+            this.socket.connect(address, this.timeout);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Returns connection status of socket.
+     * @returns Connection status of socket.
+     */
+    public boolean getIsConnected() {
+        boolean isConnected = false;
+        if (null != this.socket) {
+            isConnected = this.socket.isConnected();
+        }
+
+        return isConnected;
     }
 
     /**
@@ -76,13 +100,5 @@ public class TcpSocket {
             e.printStackTrace();
         }
         return address;
-    }
-
-    /**
-     * Returns socket's connected status.
-     * @return Socket's connected status.
-     */
-    public boolean getIsConnected() {
-        return this.socket.isConnected();
     }
 }

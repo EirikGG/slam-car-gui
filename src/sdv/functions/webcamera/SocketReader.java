@@ -21,10 +21,10 @@ public class SocketReader {
     private DatagramSocket socket;
 
     /**
-     * Creates a socket with ip and port to connect to.
+     * Creates a socket with ip and port to doReconnect to.
      *
-     * @param ipAddress Ip for socket to connect to.
-     * @param port Port to connect to.
+     * @param ipAddress Ip for socket to doReconnect to.
+     * @param port Port to doReconnect to.
      */
     public SocketReader(InetAddress ipAddress, int port) {
         doSetupSocket(ipAddress, port);
@@ -81,8 +81,8 @@ public class SocketReader {
 
     /**
      * Creates a socket and connects it.
-     * @param ipAddress Ip address for socket to connect to.
-     * @param port Port nr for socket to connect to.
+     * @param ipAddress Ip address for socket to doReconnect to.
+     * @param port Port nr for socket to doReconnect to.
      */
     private void doSetupSocket(InetAddress ipAddress, int port) {
         try {

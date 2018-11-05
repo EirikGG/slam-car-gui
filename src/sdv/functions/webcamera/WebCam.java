@@ -25,7 +25,7 @@ public class WebCam extends Thread {
      *
      * @param imageView Image view to display image.
      * @param ipAddress Ip address for server to read from.
-     * @param port Port for server to connect to.
+     * @param port Port for server to doReconnect to.
      */
     public WebCam(ImageView imageView, InetAddress ipAddress, int port) {
         this.socketReader = new SocketReader(ipAddress, port);

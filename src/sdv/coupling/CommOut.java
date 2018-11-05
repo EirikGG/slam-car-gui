@@ -25,9 +25,20 @@ public class CommOut {
      * @param str String to send.
      */
     public void doSendMotorString(String str) {
-        if (!this.motorController.getIsConnected()) {
-            this.motorController.doConnectSocket();
-        }
         this.motorController.doWriteString(str);
+    }
+
+    /**
+     * Reconnects the socket if the connection is broken or never connected.
+     */
+    public void doConnect() {
+        this.motorController.doConnect();
+    }
+
+    /**
+     * @return Sockets connection status.
+     */
+    public boolean getIsConnected() {
+        return this.motorController.getIsConnected();
     }
 }

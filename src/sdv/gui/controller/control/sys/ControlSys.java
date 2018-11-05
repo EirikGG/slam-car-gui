@@ -2,6 +2,7 @@ package sdv.gui.controller.control.sys;
 
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -24,6 +25,8 @@ public class ControlSys {
     @FXML private Slider slider;
     // GUI's ImageView, to display the images.
     @FXML private ImageView imageView;
+    // GUI's connect button.
+    @FXML private Button connectBtn;
 
     /**
      * Using initialise instead of constructor since this is called after FXML fields are populated.
@@ -69,9 +72,24 @@ public class ControlSys {
         }
     }
 
+    /**
+     * If a change in value is detected, sends info to motor controller.
+     */
     @FXML private void doHandleSliderInput() {
         Double value = this.slider.getValue();
         int number = value.intValue();
         this.commOut.doSendMotorString("SPEED:" + number);
+    }
+
+    /**
+     * If connect is pressed, tries to connect ot the server.
+     */
+    @FXML private void doHandleConnectBtn() {
+        this.connectBtn.setDisable(true);
+        this.commOut.doConnect();
+
+        if(!this.commOut.getIsConnected()) {
+            this.connectBtn.setDisable(false);
+        }
     }
 }
