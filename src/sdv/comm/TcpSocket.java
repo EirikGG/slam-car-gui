@@ -10,7 +10,7 @@ import java.net.Socket;
  * @author Eirik G. Gustafsson
  * @version 03.11.2018.
  */
-public class TcpSocket extends Thread {
+public class TcpSocket {
     // Classes tcp socket.
     private Socket socket;
     // Writer for socket comm.
@@ -26,10 +26,6 @@ public class TcpSocket extends Thread {
     public TcpSocket(String ip, int port) {
         this.ip = ip;
         this.port = port;
-    }
-
-    public void run() {
-        doConnect();
     }
 
     /**
@@ -63,7 +59,7 @@ public class TcpSocket extends Thread {
      * @return True if connection is successful and false if not.
      */
     public boolean doConnect() {
-        boolean result = false;
+        boolean result;
 
         if (null != this.socket) {
             try {
@@ -86,17 +82,5 @@ public class TcpSocket extends Thread {
         setPrintWriter();
 
         return result;
-    }
-
-    /**
-     * @returns Connection status of socket.
-     */
-    public boolean getIsConnected() {
-        boolean isConnected = false;
-        if (null != this.socket) {
-            isConnected = this.socket.isConnected();
-        }
-
-        return isConnected;
     }
 }

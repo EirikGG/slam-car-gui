@@ -24,7 +24,7 @@ public class ControlSys {
     // GUI's slider.
     @FXML private Slider slider;
     // GUI's ImageView, to display the images.
-    @FXML private ImageView imageView;
+    @FXML private ImageView webcam;
     // GUI's connect button.
     @FXML private Button connectBtn;
 
@@ -39,16 +39,10 @@ public class ControlSys {
     }
 
     /**
-     * Handles what happens when the start button is pressed.
-     */
-    @FXML private void handleStartBtnAction() {
-    }
-
-    /**
      * Handles what happens when the start video button is pressed.
      */
     @FXML private void doHandleVideoStart() {
-        this.commIn.doStartWebCam(this.imageView);
+        this.commIn.doStartWebCam(this.webcam);
     }
 
     /**
@@ -85,13 +79,6 @@ public class ControlSys {
      * If connect is pressed, tries to connect ot the server.
      */
     @FXML private void doHandleConnectBtn() {
-        this.connectBtn.setDisable(true);
-        boolean isConnected = this.commOut.doConnect();
-
-        System.out.println("Is connected = " + isConnected);
-
-        if (!isConnected) {
-            this.connectBtn.setDisable(false);
-        }
+        this.commOut.doConnect();
     }
 }

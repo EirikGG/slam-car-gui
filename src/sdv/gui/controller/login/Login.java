@@ -75,8 +75,8 @@ public class Login {
             Parent root = FXMLLoader.load(getClass().getResource("../../scenes/ControlSys.fxml"));
 
             // scenes size.
-            int width = 1400;
-            int height = 700;
+            int width = 1500;
+            int height = 900;
 
             // Centering the scene.
             Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
@@ -85,11 +85,11 @@ public class Login {
 
             // Set and shows the new scene.
             stage.setTitle(sceneTitle);
-            stage.setScene(new Scene(root, 1400, 700));
+            stage.setScene(new Scene(root, width, height));
             stage.show();
 
         } catch (Exception exc) {
-            System.out.println(exc.getMessage());
+            exc.printStackTrace();
         }
     }
 }

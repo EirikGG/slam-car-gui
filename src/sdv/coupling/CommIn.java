@@ -29,6 +29,10 @@ public class CommIn {
      * @param imageViewer Gui's image viewer, to display video feed.
      */
     public void doStartWebCam(ImageView imageViewer) {
+        if(this.webCam != null) {
+            this.webCam.doStop();
+        }
+
         // Ip for WebCam server.
         InetAddress ipAddress = null;
         try {
@@ -36,7 +40,7 @@ public class CommIn {
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        this.webCam = new WebCam(imageViewer, ipAddress, 1235);
+        this.webCam = new WebCam(imageViewer, ipAddress, 8001);
         this.webCam.setDaemon(true);
         this.webCam.start();
     }

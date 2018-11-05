@@ -17,7 +17,6 @@ public class CommOut {
      */
     public CommOut() {
         this.motorController = new TcpSocket("192.168.0.100", 8000);
-        this.motorController.start();
     }
 
     /**
