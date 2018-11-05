@@ -2,12 +2,9 @@ package sdv.functions.webcamera;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.net.DatagramPacket;
-import java.net.DatagramSocket;
+import java.net.*;
 
 import java.awt.image.BufferedImage;
-import java.net.InetAddress;
-import java.net.SocketException;
 import javax.imageio.ImageIO;
 
 /**
@@ -21,10 +18,10 @@ public class SocketReader {
     private DatagramSocket socket;
 
     /**
-     * Creates a socket with ip and port to connect to.
+     * Creates a socket with ip and port to doReconnect to.
      *
-     * @param ipAddress Ip for socket to connect to.
-     * @param port Port to connect to.
+     * @param ipAddress Ip for socket to doReconnect to.
+     * @param port Port to doReconnect to.
      */
     public SocketReader(InetAddress ipAddress, int port) {
         doSetupSocket(ipAddress, port);
@@ -81,16 +78,18 @@ public class SocketReader {
 
     /**
      * Creates a socket and connects it.
-     * @param ipAddress Ip address for socket to connect to.
-     * @param port Port nr for socket to connect to.
+     * @param ipAddress Ip address for socket to doReconnect to.
+     * @param port Port nr for socket to doReconnect to.
      */
     private void doSetupSocket(InetAddress ipAddress, int port) {
         try {
-            this.socket = new DatagramSocket(1234);
+            this.socket = new DatagramSocket(9000);
         } catch (SocketException e) {
             e.printStackTrace();
         }
         this.socket.connect(ipAddress, port);
+        System.out.println("SocketReader: Created socket on " + this.socket.getLocalPort() +
+                ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());
     }
 
     /**

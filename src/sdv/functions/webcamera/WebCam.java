@@ -16,21 +16,20 @@ public class WebCam extends Thread {
     private SocketReader socketReader;
     // Handles the image.
     private ImageDrawer imageDrawer;
-
     // True to stop reading, false to continue.
-    private boolean stopp;
+    private boolean stop;
 
     /**
      * Connects to a web-cam server with ip address and port. Draws images from server to ImageView.
      *
      * @param imageView Image view to display image.
      * @param ipAddress Ip address for server to read from.
-     * @param port Port for server to connect to.
+     * @param port Port for server to doReconnect to.
      */
     public WebCam(ImageView imageView, InetAddress ipAddress, int port) {
         this.socketReader = new SocketReader(ipAddress, port);
         this.imageDrawer = new ImageDrawer(imageView);
-        this.stopp = false;
+        this.stop = false;
 
     }
 
@@ -38,7 +37,7 @@ public class WebCam extends Thread {
      * Loop where picture is read from DatagramSocket and displayed to ImageView.
      */
     public void run() {
-        while (!this.stopp) {
+        while (!this.stop) {
             // Gets image.
             BufferedImage img = this.socketReader.getImage();
 
@@ -54,6 +53,6 @@ public class WebCam extends Thread {
      * Changes flag to stop loop and close thread.
      */
     public void doStop() {
-        this.stopp = true;
+        this.stop = true;
     }
 }
