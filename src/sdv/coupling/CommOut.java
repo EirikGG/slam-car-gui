@@ -39,6 +39,7 @@ public class CommOut {
     public void doConnect() {
         if (null != this.motorController) {
             this.motorController.doCloseSocket();
+            this.motorController.interrupt();
         }
         this.motorController = new TcpMotorClient(this.ip, this.port);
         this.motorController.start();

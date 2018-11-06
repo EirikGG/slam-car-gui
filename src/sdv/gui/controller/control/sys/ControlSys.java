@@ -80,11 +80,6 @@ public class ControlSys {
     @FXML private void doHandleConnectBtn() {
         this.commOut.doConnect();
         Runnable run = () -> {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
             while(true) {
                 doUpdateConnected();
             }
