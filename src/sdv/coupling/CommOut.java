@@ -11,12 +11,16 @@ import sdv.comm.TcpClient;
 public class CommOut {
     // Socket for communicating with motor controller.
     private TcpClient motorController;
+    // Ip address.
+    private String ip;
+    // Port.
+    private int port;
 
     /**
      * Creates new socket and defines the addresses.
      */
-    public CommOut() {
-        this.motorController = new TcpClient("192.168.0.100", 8000);
+    public CommOut(String ip, int port) {
+        this.motorController = new TcpClient(ip, port);
     }
 
     /**
@@ -29,9 +33,10 @@ public class CommOut {
     }
 
     /**
-     * Reconnects the socket if the connection is broken or never connected.
+     * Interrupts thread and starts a new one.
      */
     public void doConnect() {
+            this.motorController.interrupt();
         this.motorController.start();
     }
 }

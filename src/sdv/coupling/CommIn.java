@@ -15,11 +15,17 @@ import java.net.UnknownHostException;
 public class CommIn {
     // Reads from web-cam server.
     private WebCam webCam;
+    // Server ip address.
+    private String ip;
+    // Servers port.
+    private int port;
 
     /**
      * Initial values.
      */
-    public CommIn() {
+    public CommIn(String ip, int port) {
+        this.ip = ip;
+        this.port = port;
         this.webCam = null;
     }
 
@@ -36,11 +42,11 @@ public class CommIn {
         // Ip for WebCam server.
         InetAddress ipAddress = null;
         try {
-            ipAddress = InetAddress.getByName("192.168.0.100");
+            ipAddress = InetAddress.getByName(this.ip);
         } catch (UnknownHostException e) {
             e.printStackTrace();
         }
-        this.webCam = new WebCam(imageViewer, ipAddress, 8001);
+        this.webCam = new WebCam(imageViewer, ipAddress, this.port);
         this.webCam.setDaemon(true);
         this.webCam.start();
     }

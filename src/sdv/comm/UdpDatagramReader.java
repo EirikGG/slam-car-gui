@@ -83,7 +83,7 @@ public class UdpDatagramReader {
      */
     private void doSetupSocket(InetAddress ipAddress, int port) {
         try {
-            this.socket = new DatagramSocket();
+            this.socket = new DatagramSocket(9000);
         } catch (SocketException e) {
             e.printStackTrace();
         }

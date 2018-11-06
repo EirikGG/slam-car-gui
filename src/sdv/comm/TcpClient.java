@@ -31,7 +31,6 @@ public class TcpClient extends Thread {
     @Override
     public void run() {
         doConnect();
-        setPrintWriter();
     }
 
     /**
@@ -77,9 +76,14 @@ public class TcpClient extends Thread {
         try {
             this.socket = new Socket(this.ip, this.port);
 
+            System.out.println("Socket connected to " + this.socket.getInetAddress().toString()
+                    + ";" + this.socket.getPort());
+
+            setPrintWriter();
+
         } catch (IOException e) {
             this.socket = null;
-            e.printStackTrace();
+            System.out.println("TcpClient: Cant connect socket");
         }
     }
 }
