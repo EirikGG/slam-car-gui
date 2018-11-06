@@ -1,4 +1,4 @@
-package sdv.functions.webcamera;
+package sdv.comm;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  * @author Eirik G. Gustafsson
  * @version 25.09.2018.
  */
-public class SocketReader {
+public class UdpDatagramReader {
     // Datagram socket.
     private DatagramSocket socket;
 
@@ -23,7 +23,7 @@ public class SocketReader {
      * @param ipAddress Ip for socket to doReconnect to.
      * @param port Port to doReconnect to.
      */
-    public SocketReader(InetAddress ipAddress, int port) {
+    public UdpDatagramReader(InetAddress ipAddress, int port) {
         doSetupSocket(ipAddress, port);
     }
 
@@ -83,12 +83,12 @@ public class SocketReader {
      */
     private void doSetupSocket(InetAddress ipAddress, int port) {
         try {
-            this.socket = new DatagramSocket(9000);
+            this.socket = new DatagramSocket();
         } catch (SocketException e) {
             e.printStackTrace();
         }
         this.socket.connect(ipAddress, port);
-        System.out.println("SocketReader: Created socket on " + this.socket.getLocalPort() +
+        System.out.println("UdpDatagramReader: Created socket on " + this.socket.getLocalPort() +
                 ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());
     }
 

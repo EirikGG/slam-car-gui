@@ -10,7 +10,7 @@ import java.net.Socket;
  * @author Eirik G. Gustafsson
  * @version 03.11.2018.
  */
-public class TcpSocket {
+public class TcpClient extends Thread {
     // Classes tcp socket.
     private Socket socket;
     // Writer for socket comm.
@@ -23,9 +23,15 @@ public class TcpSocket {
     /**
      * Initializes with a new socket.
      */
-    public TcpSocket(String ip, int port) {
+    public TcpClient(String ip, int port) {
         this.ip = ip;
         this.port = port;
+    }
+
+    @Override
+    public void run() {
+        doConnect();
+        setPrintWriter();
     }
 
     /**
@@ -36,7 +42,7 @@ public class TcpSocket {
             this.writer = new PrintWriter(this.socket.getOutputStream(), true);
         } catch (IOException e) {
             //e.printStackTrace();
-            System.out.println("TcpSocket: Cant set PrintWriter");
+            System.out.println("TcpClient: Cant set PrintWriter");
         }
     }
 
@@ -50,7 +56,7 @@ public class TcpSocket {
         if (null != this.writer) {
             this.writer.println(str);
         } else {
-            System.out.println("TcpSocket: Cant send, PrintWriter is null");
+            System.out.println("TcpClient: Cant send, PrintWriter is null");
         }
     }
 
@@ -58,8 +64,7 @@ public class TcpSocket {
      * Connects socket to a remote ip and port. If a socket exists, closes that one first.
      * @return True if connection is successful and false if not.
      */
-    public boolean doConnect() {
-        boolean result;
+    public void doConnect() {
 
         if (null != this.socket) {
             try {
@@ -71,16 +76,10 @@ public class TcpSocket {
 
         try {
             this.socket = new Socket(this.ip, this.port);
-            result = true;
 
         } catch (IOException e) {
             this.socket = null;
-            result = false;
             e.printStackTrace();
         }
-
-        setPrintWriter();
-
-        return result;
     }
 }
