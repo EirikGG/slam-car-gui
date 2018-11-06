@@ -1,7 +1,6 @@
 package sdv.gui.controller.control.sys;
 
 import com.jfoenix.controls.JFXToggleButton;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -9,8 +8,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import sdv.coupling.CommIn;
 import sdv.coupling.CommOut;
-
-import java.util.Observable;
 
 /**
  * Controls the control system GUI screen.
@@ -29,7 +26,7 @@ public class ControlSys {
     // GUI's ImageView, to display the images.
     @FXML private ImageView webcam;
     // GUI's connected label.
-    @FXML private Label connectedLabel;
+    @FXML private Label connLabel;
 
     /**
      * Using initialise instead of constructor since this is called after FXML fields are populated.
@@ -82,5 +79,30 @@ public class ControlSys {
      */
     @FXML private void doHandleConnectBtn() {
         this.commOut.doConnect();
+        Runnable run = () -> {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            while(true) {
+                doUpdateConnected();
+            }
+        };
+
+        Thread thread = new Thread(run);
+        thread.setDaemon(true);
+        thread.start();
+    }
+
+    /**
+     * Updates connected label.
+     */
+    @FXML private void doUpdateConnected() {
+        if (this.commOut.getIsConnected()) {
+            this.connLabel.setText("Connected");
+        } else {
+            this.connLabel.setText("Disconnected");
+        }
     }
 }

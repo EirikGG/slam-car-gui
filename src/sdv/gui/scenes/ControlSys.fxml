@@ -96,7 +96,7 @@
                         <Insets top="10.0" />
                      </padding>
                   </GridPane>
-                  <Label fx:id="connectedLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Disconnected" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <Label fx:id="connLabel" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Disconnected" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <GridPane.margin>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
