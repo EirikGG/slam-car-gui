@@ -13,22 +13,56 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="900.0" prefWidth="1500.0" stylesheets="@../theme/modena_dark.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdv.gui.controller.control.sys.ControlSys">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1400.0" stylesheets="@../theme/modena_dark.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sdv.gui.controller.control.sys.ControlSys">
    <children>
-      <GridPane layoutX="315.0" layoutY="166.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane layoutX="315.0" layoutY="166.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="595.0" minWidth="10.0" prefWidth="300.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="905.0" minWidth="10.0" prefWidth="866.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="640.0" minWidth="640.0" prefWidth="640.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="700.0" />
         </columnConstraints>
         <rowConstraints>
-          <RowConstraints maxHeight="541.0" minHeight="10.0" prefHeight="373.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="527.0" minHeight="10.0" prefHeight="527.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="541.0" minHeight="10.0" prefHeight="232.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="592.0" minHeight="10.0" prefHeight="568.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <GridPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1">
               <rowConstraints>
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
+               <columnConstraints>
+                  <ColumnConstraints />
+               </columnConstraints>
+               <children>
+                  <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="700.0">
+                     <top>
+                        <GridPane BorderPane.alignment="CENTER">
+                          <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop" GridPane.columnIndex="2" />
+                              <Label text="Lidar map:">
+                                 <font>
+                                    <Font size="30.0" />
+                                 </font>
+                              </Label>
+                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Start" GridPane.columnIndex="1" />
+                           </children>
+                           <BorderPane.margin>
+                              <Insets left="10.0" right="10.0" />
+                           </BorderPane.margin>
+                        </GridPane>
+                     </top>
+                     <center>
+                        <ImageView fitHeight="486.0" fitWidth="642.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                     </center>
+                  </BorderPane>
+               </children>
             </GridPane>
             <GridPane>
               <columnConstraints>
@@ -39,19 +73,16 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
                   <Button fx:id="connectBtn" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleConnectBtn" text="Connect" GridPane.rowIndex="1" />
-                  <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" text="Stop" GridPane.rowIndex="2" />
-                  <Slider fx:id="slider" blockIncrement="1.0" majorTickUnit="16.0" max="64.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minorTickCount="0" onMouseReleased="#doHandleSliderInput" showTickLabels="true" showTickMarks="true" snapToTicks="true" GridPane.rowIndex="3">
+                  <Slider fx:id="slider" blockIncrement="1.0" majorTickUnit="16.0" max="64.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minorTickCount="0" onMouseReleased="#doHandleSliderInput" showTickLabels="true" showTickMarks="true" snapToTicks="true" value="32.0" GridPane.rowIndex="2">
                      <padding>
                         <Insets left="10.0" right="10.0" />
                      </padding>
                   </Slider>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Vehicle speed" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Vehicle speed" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -59,8 +90,8 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <JFXToggleButton fx:id="manualMode" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#doHandleKeyInput" onKeyReleased="#doHandleKeyInput" stylesheets="@../theme/modena_dark.css" text=" " toggleColor="#004f8e" toggleLineColor="#2a84a8" GridPane.rowIndex="4" />
-                  <Label layoutX="258.0" layoutY="218.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Manual mode" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <JFXToggleButton fx:id="manualMode" focusTraversable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onKeyPressed="#doHandleKeyInput" onKeyReleased="#doHandleKeyInput" stylesheets="@../theme/modena_dark.css" text=" " toggleColor="#004f8e" toggleLineColor="#2a84a8" GridPane.rowIndex="3" />
+                  <Label layoutX="258.0" layoutY="218.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Manual mode" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <font>
                         <Font size="15.0" />
                      </font>
@@ -68,44 +99,44 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="63.0" prefWidth="159.0" text="Vehicle:">
+                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="61.0" prefWidth="143.0" text="Vehicle:">
                      <font>
                         <Font size="30.0" />
                      </font>
                   </Label>
-                  <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Web-cam:" GridPane.rowIndex="5">
-                     <font>
-                        <Font size="30.0" />
-                     </font>
-                  </Label>
-                  <GridPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+               </children>
+               <padding>
+                  <Insets left="10.0" top="10.0" />
+               </padding>
+            </GridPane>
+            <BorderPane prefHeight="512.0" prefWidth="683.0" GridPane.rowIndex="1">
+               <center>
+                  <ImageView fx:id="webcam" fitHeight="481.0" fitWidth="640.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+               </center>
+               <top>
+                  <GridPane BorderPane.alignment="CENTER">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
                     <rowConstraints>
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStart" text="Start" />
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStop" text="Stop" GridPane.columnIndex="1" />
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="Web-cam:">
+                           <font>
+                              <Font size="30.0" />
+                           </font>
+                        </Label>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStart" text="Start" GridPane.columnIndex="1" />
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStop" text="Stop" GridPane.columnIndex="2" />
                      </children>
-                     <GridPane.margin>
-                        <Insets top="10.0" />
-                     </GridPane.margin>
-                     <padding>
-                        <Insets top="10.0" />
-                     </padding>
+                     <BorderPane.margin>
+                        <Insets left="10.0" />
+                     </BorderPane.margin>
                   </GridPane>
-               </children>
-               <padding>
-                  <Insets left="10.0" top="10.0" />
-               </padding>
-            </GridPane>
-            <BorderPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
-               <center>
-                  <ImageView fx:id="webcam" fitHeight="424.0" fitWidth="582.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
-               </center></BorderPane>
+               </top></BorderPane>
          </children>
       </GridPane>
    </children>

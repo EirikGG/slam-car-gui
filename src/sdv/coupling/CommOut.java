@@ -1,6 +1,6 @@
 package sdv.coupling;
 
-import sdv.comm.TcpSocket;
+import sdv.comm.TcpMotorClient;
 
 /**
  * Interface for communication the gui is sending "out".
@@ -10,13 +10,18 @@ import sdv.comm.TcpSocket;
  */
 public class CommOut {
     // Socket for communicating with motor controller.
-    private TcpSocket motorController;
+    private TcpMotorClient motorController;
+    // MotorController ip.
+    private String ip;
+    // MotorController port.
+    private int port;
 
     /**
      * Creates new socket and defines the addresses.
      */
-    public CommOut() {
-        this.motorController = new TcpSocket("192.168.0.100", 8000);
+    public CommOut(String ip, int port) {
+        this.ip = ip;
+        this.port = port;
     }
 
     /**
@@ -29,9 +34,18 @@ public class CommOut {
     }
 
     /**
-     * Reconnects the socket if the connection is broken or never connected.
+     * Interrupts thread and starts a new one.
      */
-    public boolean doConnect() {
-        return this.motorController.doConnect();
+    public void doConnect() {
+        if (null != this.motorController) {
+            this.motorController.doCloseSocket();
+            this.motorController.interrupt();
+        }
+        this.motorController = new TcpMotorClient(this.ip, this.port);
+        this.motorController.start();
+    }
+
+    public boolean getIsConnected() {
+        return this.motorController.getIsConnected();
     }
 }

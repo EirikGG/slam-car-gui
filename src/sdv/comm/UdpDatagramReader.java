@@ -1,4 +1,4 @@
-package sdv.functions.webcamera;
+package sdv.comm;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  * @author Eirik G. Gustafsson
  * @version 25.09.2018.
  */
-public class SocketReader {
+public class UdpDatagramReader {
     // Datagram socket.
     private DatagramSocket socket;
 
@@ -21,9 +21,9 @@ public class SocketReader {
      * Creates a socket with ip and port to doReconnect to.
      *
      * @param ipAddress Ip for socket to doReconnect to.
-     * @param port Port to doReconnect to.
+     * @param port      Port to doReconnect to.
      */
-    public SocketReader(InetAddress ipAddress, int port) {
+    public UdpDatagramReader(InetAddress ipAddress, int port) {
         doSetupSocket(ipAddress, port);
     }
 
@@ -64,7 +64,7 @@ public class SocketReader {
      * @throws IOException Nothing to receive.
      */
     private byte[] doReadSocket() {
-        byte[] receivedData = new byte[9600];
+        byte[] receivedData = new byte[15000];
         DatagramPacket packet = new DatagramPacket(receivedData, receivedData.length);
 
         try {
@@ -78,17 +78,20 @@ public class SocketReader {
 
     /**
      * Creates a socket and connects it.
+     *
      * @param ipAddress Ip address for socket to doReconnect to.
-     * @param port Port nr for socket to doReconnect to.
+     * @param port      Port nr for socket to doReconnect to.
      */
     private void doSetupSocket(InetAddress ipAddress, int port) {
+        doCloseSocket();
+
         try {
             this.socket = new DatagramSocket(9000);
         } catch (SocketException e) {
             e.printStackTrace();
         }
         this.socket.connect(ipAddress, port);
-        System.out.println("SocketReader: Created socket on " + this.socket.getLocalPort() +
+        System.out.println("UdpDatagramReader: Created socket on " + this.socket.getLocalPort() +
                 ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());
     }
 
@@ -96,6 +99,8 @@ public class SocketReader {
      * Closes the socket.
      */
     public void doCloseSocket() {
-        this.socket.close();
+        if (null != this.socket) {
+            this.socket.close();
+        }
     }
 }

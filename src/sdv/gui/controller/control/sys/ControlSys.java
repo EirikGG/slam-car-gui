@@ -2,7 +2,6 @@ package sdv.gui.controller.control.sys;
 
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -25,16 +24,13 @@ public class ControlSys {
     @FXML private Slider slider;
     // GUI's ImageView, to display the images.
     @FXML private ImageView webcam;
-    // GUI's connect button.
-    @FXML private Button connectBtn;
 
     /**
      * Using initialise instead of constructor since this is called after FXML fields are populated.
      */
     public void initialize() {
-        this.commIn = new CommIn();
-        this.commOut = new CommOut();
-        doHandleVideoStart();
+        this.commIn = new CommIn("192.168.0.100", 8001);
+        this.commOut = new CommOut("192.168.0.100", 8000);
         this.btnEvent = new KeyboardInput();
     }
 

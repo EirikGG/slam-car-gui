@@ -10,7 +10,7 @@ import java.net.Socket;
  * @author Eirik G. Gustafsson
  * @version 03.11.2018.
  */
-public class TcpSocket {
+public class TcpMotorClient extends Thread {
     // Classes tcp socket.
     private Socket socket;
     // Writer for socket comm.
@@ -23,9 +23,17 @@ public class TcpSocket {
     /**
      * Initializes with a new socket.
      */
-    public TcpSocket(String ip, int port) {
+    public TcpMotorClient(String ip, int port) {
         this.ip = ip;
         this.port = port;
+    }
+
+    @Override
+    public void run() {
+        doCloseSocket();
+        this.socket = new Socket();
+        doConnect();
+        setPrintWriter();
     }
 
     /**
@@ -36,7 +44,7 @@ public class TcpSocket {
             this.writer = new PrintWriter(this.socket.getOutputStream(), true);
         } catch (IOException e) {
             //e.printStackTrace();
-            System.out.println("TcpSocket: Cant set PrintWriter");
+            System.out.println("TcpMotorClient: Cant set PrintWriter");
         }
     }
 
@@ -46,20 +54,20 @@ public class TcpSocket {
      * @param str String to send trough socket.
      */
     public void doWriteString(String str) {
-        System.out.println(str); //TODO: Delete print statement.
         if (null != this.writer) {
             this.writer.println(str);
+            System.out.println(str);
         } else {
-            System.out.println("TcpSocket: Cant send, PrintWriter is null");
+            System.out.println("TcpMotorClient: Cant send, PrintWriter is null");
         }
     }
 
     /**
      * Connects socket to a remote ip and port. If a socket exists, closes that one first.
+     *
      * @return True if connection is successful and false if not.
      */
-    public boolean doConnect() {
-        boolean result;
+    private void doConnect() {
 
         if (null != this.socket) {
             try {
@@ -71,16 +79,39 @@ public class TcpSocket {
 
         try {
             this.socket = new Socket(this.ip, this.port);
-            result = true;
+
+            System.out.println("Socket connected to " + this.socket.getInetAddress().toString()
+                    + ";" + this.socket.getPort());
+
+            setPrintWriter();
 
         } catch (IOException e) {
             this.socket = null;
-            result = false;
-            e.printStackTrace();
+            System.out.println("TcpMotorClient: Cant connect socket");
         }
+    }
 
-        setPrintWriter();
+    /**
+     * @return Connection status of socket.
+     */
+    public boolean getIsConnected() {
+        boolean result = false;
+        if (null != this.socket)
+            result = this.socket.isConnected();
 
         return result;
+    }
+
+    /**
+     * Closes socket.
+     */
+    public void doCloseSocket() {
+        if (null != this.socket) {
+            try {
+                this.socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
