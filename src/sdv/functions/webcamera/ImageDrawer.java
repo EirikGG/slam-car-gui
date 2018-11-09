@@ -44,4 +44,8 @@ public class ImageDrawer {
     private Image doChangeImage(BufferedImage img) {
         return SwingFXUtils.toFXImage(img, null);
     }
+
+    public void doClear() {
+        this.imageView.setImage(null);
+    }
 }

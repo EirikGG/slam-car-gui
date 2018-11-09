@@ -21,7 +21,7 @@ public class UdpDatagramReader {
      * Creates a socket with ip and port to doReconnect to.
      *
      * @param ipAddress Ip for socket to doReconnect to.
-     * @param port Port to doReconnect to.
+     * @param port      Port to doReconnect to.
      */
     public UdpDatagramReader(InetAddress ipAddress, int port) {
         doSetupSocket(ipAddress, port);
@@ -64,7 +64,7 @@ public class UdpDatagramReader {
      * @throws IOException Nothing to receive.
      */
     private byte[] doReadSocket() {
-        byte[] receivedData = new byte[9600];
+        byte[] receivedData = new byte[15000];
         DatagramPacket packet = new DatagramPacket(receivedData, receivedData.length);
 
         try {
@@ -78,10 +78,13 @@ public class UdpDatagramReader {
 
     /**
      * Creates a socket and connects it.
+     *
      * @param ipAddress Ip address for socket to doReconnect to.
-     * @param port Port nr for socket to doReconnect to.
+     * @param port      Port nr for socket to doReconnect to.
      */
     private void doSetupSocket(InetAddress ipAddress, int port) {
+        doCloseSocket();
+
         try {
             this.socket = new DatagramSocket(9000);
         } catch (SocketException e) {
@@ -96,6 +99,8 @@ public class UdpDatagramReader {
      * Closes the socket.
      */
     public void doCloseSocket() {
-        this.socket.close();
+        if (null != this.socket) {
+            this.socket.close();
+        }
     }
 }

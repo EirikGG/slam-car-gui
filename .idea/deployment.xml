@@ -5,7 +5,7 @@
       <paths name="Odroid">
         <serverdata>
           <mappings>
-            <mapping deploy="/Music" local="$PROJECT_DIR$/out/artifacts/sdv_gui_jar" web="/" />
+            <mapping deploy="/Music" local="$PROJECT_DIR$/out/artifacts" web="/" />
           </mappings>
         </serverdata>
       </paths>

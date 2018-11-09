@@ -46,6 +46,8 @@ public class WebCam extends Thread {
             this.imageDrawer.drawImage(img);
         }
 
+        // Clears the imageView.
+        this.imageDrawer.doClear();
         // Close socket before thread is closed.
         this.udpDatagramReader.doCloseSocket();
     }
