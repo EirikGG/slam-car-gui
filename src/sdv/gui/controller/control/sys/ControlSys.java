@@ -44,15 +44,22 @@ public class ControlSys {
         this.commIn.doStartWebCam(this.webcam);
     }
 
-    
-    @FXML private void doHandleSlamCam() {this.commIn.doStartWebCam(this.slamCam);}
-
     /**
      * Handles what happens when the stop video button is pressed.
      */
     @FXML private void doHandleVideoStop() {
         this.commIn.doStopWebCam();
     }
+
+    /**
+     * Starts the slam cam.
+     */
+    @FXML private void doHandleSlamCam() {this.commIn.doStartSlamCam(this.slamCam);}
+
+    /**
+     * Stops the slam cam.
+     */
+    @FXML private void doStopSlamCam() {this.commIn.doStopSlamCam();}
 
     /**
      * Send string if it is not "".
