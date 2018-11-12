@@ -1,4 +1,4 @@
-package sdv.functions.webcamera;
+package sdv.functions.misc;
 
 
 import javafx.embed.swing.SwingFXUtils;
