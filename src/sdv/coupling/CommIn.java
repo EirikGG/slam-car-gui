@@ -1,8 +1,7 @@
 package sdv.coupling;
 
 import javafx.scene.image.ImageView;
-import sdv.functions.slam.SlamImage;
-import sdv.functions.webcamera.WebCam;
+import sdv.functions.Cam;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -15,14 +14,14 @@ import java.net.UnknownHostException;
  */
 public class CommIn {
     // Reads from web-cam server.
-    private WebCam webCam;
+    private Cam webCam;
     // Server webCamIp address.
     private String webCamIp;
     // Servers port.
     private int webCamPort;
 
     // Reads from slam server.
-    private SlamImage slam;
+    private Cam slam;
     // Slam server ip address.
     private String slamIp;
     // Slam servers webCamPort.
@@ -54,7 +53,7 @@ public class CommIn {
         if(this.webCam != null) {
             this.webCam.doStop();
         }
-        this.webCam = new WebCam(imageViewer, getInetAddress(this.webCamIp), this.webCamPort);
+        this.webCam = new Cam(imageViewer, getInetAddress(this.webCamIp), this.webCamPort);
         this.webCam.setDaemon(true);
         this.webCam.start();
     }
@@ -75,7 +74,7 @@ public class CommIn {
         if(this.slam != null) {
             this.slam.doStop();
         }
-        this.slam = new SlamImage(imageViewer, getInetAddress(this.slamIp), this.slamPort);
+        this.slam = new Cam(imageViewer, getInetAddress(this.slamIp), this.slamPort);
         this.slam.setDaemon(true);
         this.slam.start();
     }
