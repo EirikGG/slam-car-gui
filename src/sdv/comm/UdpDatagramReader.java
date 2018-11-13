@@ -1,5 +1,9 @@
 package sdv.comm;
 
+import sdv.gui.controller.control.sys.ControlSys;
+
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.*;
@@ -25,6 +29,7 @@ public class UdpDatagramReader {
      */
     public UdpDatagramReader(InetAddress ipAddress, int port, int localPort) {
         doSetupSocket(ipAddress, port, localPort);
+
     }
 
     /**

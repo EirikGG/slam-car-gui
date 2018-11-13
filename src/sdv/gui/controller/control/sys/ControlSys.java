@@ -2,16 +2,20 @@ package sdv.gui.controller.control.sys;
 
 import com.jfoenix.controls.JFXToggleButton;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import sdv.coupling.CommIn;
 import sdv.coupling.CommOut;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
  * Controls the control system GUI screen.
  */
-public class ControlSys {
+public class ControlSys implements PropertyChangeListener {
     // Interface for incoming communication.
     private CommIn commIn;
     // Interface for outgoing communication.
@@ -26,6 +30,8 @@ public class ControlSys {
     @FXML private ImageView webcam;
     // GUI's ImageView, to display the images.
     @FXML private ImageView slamCam;
+    // GUI's connected label.
+    @FXML private Label connectedLabel;
 
 
     /**
@@ -35,6 +41,13 @@ public class ControlSys {
         this.commOut = new CommOut("192.168.0.100", 8000);
         this.commIn = new CommIn("192.168.0.100", 8001, 9000, 8002);
         this.btnEvent = new KeyboardInput();
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if(evt.getPropertyName().toUpperCase().equals("WEB_CAM_CONNECTED")) {
+            this.connectedLabel.setText((String)evt.getNewValue());
+        }
     }
 
     /**

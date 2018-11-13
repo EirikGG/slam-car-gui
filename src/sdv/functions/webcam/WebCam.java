@@ -3,8 +3,11 @@ package sdv.functions.webcam;
 import javafx.scene.image.ImageView;
 import sdv.comm.UdpDatagramReader;
 import sdv.functions.misc.ImageDrawer;
+import sdv.gui.controller.control.sys.ControlSys;
 
+import javax.naming.ldap.Control;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeListener;
 import java.net.InetAddress;
 
 /**

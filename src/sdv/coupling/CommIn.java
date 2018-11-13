@@ -3,7 +3,9 @@ package sdv.coupling;
 import javafx.scene.image.ImageView;
 import sdv.functions.slam.SlamCam;
 import sdv.functions.webcam.WebCam;
+import sdv.gui.controller.control.sys.ControlSys;
 
+import java.beans.PropertyChangeListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
