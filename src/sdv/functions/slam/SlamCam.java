@@ -48,8 +48,11 @@ public class SlamCam extends Thread {
         while (!this.stop) {
             // Gets image.
             BufferedImage img = this.tcpClient.getImage();
-            // Draw's the image.
-            this.imageDrawer.drawImage(img);
+
+            if (null != img) {
+                // Draw's the image.
+                this.imageDrawer.drawImage(img);
+            }
         }
 
         // Clears the imageView.

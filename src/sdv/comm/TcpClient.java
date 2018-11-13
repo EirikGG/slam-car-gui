@@ -1,10 +1,12 @@
 package sdv.comm;
 
+import java.awt.*;
+import java.awt.image.DataBufferByte;
+import java.awt.image.Raster;
 import java.io.*;
 import java.net.*;
 
 import java.awt.image.BufferedImage;
-import javax.imageio.ImageIO;
 
 /**
  * Reads a DatagramSocket and assembles the data.
@@ -16,7 +18,7 @@ public class TcpClient {
     // Datagram socket.
     private Socket socket;
     // Input stream to read from socket.
-    private InputStream reader;
+    private DataInputStream reader;
 
     /**
      * Creates a socket with ip and port to doReconnect to.
@@ -27,7 +29,7 @@ public class TcpClient {
     public TcpClient(InetAddress ipAddress, int port) {
         doSetupSocket(ipAddress, port);
         try {
-            this.reader = this.socket.getInputStream();
+            this.reader = new DataInputStream(this.socket.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -50,29 +52,22 @@ public class TcpClient {
      * @throws IOException Cant read byteArray.
      */
     private BufferedImage doAssembleData(byte[] recivedData) {
-        // Initialises the BufferedImage to be returned.
-        BufferedImage img = null;
 
-        // Gets raw data and converts it to buffered image.
-        try {
-            img = ImageIO.read(new ByteArrayInputStream(recivedData));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        BufferedImage img = new BufferedImage(820, 820, BufferedImage.TYPE_BYTE_GRAY);
+        img.setData(Raster.createRaster(img.getSampleModel(), new DataBufferByte(recivedData, recivedData.length), new Point() ) );
 
         return img;
     }
 
     /**
      * Reads from dDatagramSocket, returns the data from the packet.
-     *
      * @return Data from DatagramSocket.
      * @throws IOException Nothing to receive.
      */
     private byte[] doReadSocket() {
         byte[] bytes = new byte[672400];
         try {
-            this.reader.read(bytes, 0, 820*820);
+            this.reader.readFully(bytes, 0, bytes.length);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -87,7 +82,7 @@ public class TcpClient {
      */
     private void doSetupSocket(InetAddress ipAddress, int port) {
         doCloseSocket();
-            this.socket = new Socket();
+        this.socket = new Socket();
         try {
             this.socket.connect(getSocketAddress(ipAddress, port));
         } catch (IOException e) {
@@ -110,6 +105,12 @@ public class TcpClient {
         }
     }
 
+    /**
+     * Creates a socket address for a socket to connect to.
+     * @param ip Ip address.
+     * @param port Port to connect to.
+     * @return InetSocketAddress.
+     */
     private InetSocketAddress getSocketAddress(InetAddress ip, int port) {
         return new InetSocketAddress(ip, port);
     }
