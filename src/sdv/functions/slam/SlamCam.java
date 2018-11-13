@@ -1,51 +1,70 @@
 package sdv.functions.slam;
 
-import sdv.comm.TcpSlamClient;
-import sdv.functions.Cam;
+import javafx.scene.image.ImageView;
+import sdv.comm.TcpClient;
+import sdv.functions.misc.ImageDrawer;
 
 import java.awt.image.BufferedImage;
-import java.beans.PropertyChangeListener;
+import java.net.InetAddress;
 
 /**
- * Gets Image from TCP based TcpSlamClient.
+ * Gets Image from UDP based UdpDatagramReader and sends it to ImageDrawer to be displayed.
  *
  * @author Eirik G. Gustafsson
  * @version 12.11.2018.
  */
-public class SlamCam extends Cam {
+public class SlamCam extends Thread {
     // Read from datagram socket.
-    private TcpSlamClient tcpSlamClient;
+    private TcpClient tcpClient;
+    // Handles the image.
+    private ImageDrawer imageDrawer;
+    // True to stop reading, false to continue.
+    private boolean stop;
+    // Slams ip.
+    private InetAddress ipAddress;
+    // Slams port.
+    private int port;
 
     /**
-     * @param ipAddress Ip address of server.
-     * @param port Servers web-cam port.
-     * @param localPort LocalSocket port.
+     * Connects to a UDP cam server with ip address and port, and setups imageViewer.
+     *
+     * @param imageView Image view to display image.
+     * @param ipAddress Ip address for server to read from.
+     * @param port      Port for server to doReconnect to.
      */
-    public SlamCam(String ipAddress, int port, int localPort, PropertyChangeListener pcl) {
-        super(ipAddress, port, localPort);
-        this.tcpSlamClient = new TcpSlamClient(pcl, ipAddress, port);
-        this.tcpSlamClient.setDaemon(true);
-        this.tcpSlamClient.start();
+    public SlamCam(ImageView imageView, InetAddress ipAddress, int port) {
+        this.ipAddress = ipAddress;
+        this.port = port;
+        this.imageDrawer = new ImageDrawer(imageView);
+        this.stop = false;
+
     }
 
     /**
-     * @return Image from a socket.
+     * Loop where picture is read from DatagramSocket and displayed to ImageView.
      */
-    public BufferedImage getImage() {
-        return this.tcpSlamClient.getImage();
+    public void run() {
+        this.tcpClient = new TcpClient(ipAddress, port);
+        while (!this.stop) {
+            // Gets image.
+            BufferedImage img = this.tcpClient.getImage();
+
+            if (null != img) {
+                // Draw's the image.
+                this.imageDrawer.drawImage(img);
+            }
+        }
+
+        // Clears the imageView.
+        this.imageDrawer.doClear();
+        // Close socket before thread is closed.
+        this.tcpClient.doCloseSocket();
     }
 
     /**
-     * Closes socket and creates a new one.
+     * Changes flag to stop loop and close thread.
      */
-    public void doCreateSocket() {
-        this.tcpSlamClient.doCreateNewSocket(this.ipAddress, this.port);
-    }
-
-    /**
-     * Closes the socket.
-     */
-    public void doCloseSocket() {
-        this.tcpSlamClient.doCloseSocket();
+    public void doStop() {
+        this.stop = true;
     }
 }
