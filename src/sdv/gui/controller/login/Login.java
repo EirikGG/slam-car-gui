@@ -62,11 +62,20 @@ public class Login {
 
 
     /**
+<<<<<<< HEAD
      * Changes scene from Login to ControlSys.
      *
      * @param event User presses login button or enter.
      */
     private void doChangeScene(ActionEvent event) {
+=======
+     * Changes scene from login to controlSys.
+     *
+     * @param event Trigger event, login button or enter press.
+     * @throws Exception FXML controlSys file, not found.
+     */
+    private void doChangeScene(ActionEvent event) throws Exception{
+>>>>>>> feature/arrow_key_input
         // Gets the stage from the event.
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
 
@@ -74,7 +83,7 @@ public class Login {
             // Gets the new root from FXML file.
             Parent root = FXMLLoader.load(getClass().getResource("../../scenes/ControlSys.fxml"));
 
-            // scenes size.
+            // Scenes size.
             int width = 1400;
             int height = 700;
 
