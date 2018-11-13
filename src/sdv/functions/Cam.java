@@ -1,4 +1,4 @@
-package sdv.functions.webcamera;
+package sdv.functions;
 
 import javafx.scene.image.ImageView;
 import sdv.comm.UdpDatagramReader;
@@ -10,10 +10,10 @@ import java.net.InetAddress;
 /**
  * Gets Image from UDP based UdpDatagramReader and sends it to ImageDrawer to be displayed.
  *
- * @version 25.09.2018
  * @author Eirik G. Gustafsson
+ * @version 12.11.2018.
  */
-public class WebCam extends Thread {
+public class Cam extends Thread {
     // Read from datagram socket.
     private UdpDatagramReader udpDatagramReader;
     // Handles the image.
@@ -22,13 +22,13 @@ public class WebCam extends Thread {
     private boolean stop;
 
     /**
-     * Connects to a web-cam server with ip address and port. Draws images from server to ImageView.
+     * Connects to a UDP cam server with ip address and port, and setups imageViewer.
      *
      * @param imageView Image view to display image.
      * @param ipAddress Ip address for server to read from.
-     * @param port Port for server to doReconnect to.
+     * @param port      Port for server to doReconnect to.
      */
-    public WebCam(ImageView imageView, InetAddress ipAddress, int port) {
+    public Cam(ImageView imageView, InetAddress ipAddress, int port) {
         this.udpDatagramReader = new UdpDatagramReader(ipAddress, port);
         this.imageDrawer = new ImageDrawer(imageView);
         this.stop = false;
@@ -42,7 +42,6 @@ public class WebCam extends Thread {
         while (!this.stop) {
             // Gets image.
             BufferedImage img = this.udpDatagramReader.getImage();
-
             // Draw's the image.
             this.imageDrawer.drawImage(img);
         }

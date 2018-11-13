@@ -1,7 +1,7 @@
 package sdv.coupling;
 
 import javafx.scene.image.ImageView;
-import sdv.functions.webcamera.WebCam;
+import sdv.functions.Cam;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -14,19 +14,34 @@ import java.net.UnknownHostException;
  */
 public class CommIn {
     // Reads from web-cam server.
-    private WebCam webCam;
-    // Server ip address.
-    private String ip;
+    private Cam webCam;
+    // Server webCamIp address.
+    private String webCamIp;
     // Servers port.
-    private int port;
+    private int webCamPort;
+
+    // Reads from slam server.
+    private Cam slam;
+    // Slam server ip address.
+    private String slamIp;
+    // Slam servers webCamPort.
+    private int slamPort;
+
 
     /**
      * Initial values.
      */
-    public CommIn(String ip, int port) {
-        this.ip = ip;
-        this.port = port;
+    public CommIn(String webCamIp, int webCamPort, String slamIp, int slamPort) {
+        // Webcam info.
+        this.webCamIp = webCamIp;
+        this.webCamPort = webCamPort;
         this.webCam = null;
+
+
+        // Slam info.
+        this.slam = null;
+        this.slamIp = slamIp;
+        this.slamPort = slamPort;
     }
 
     /**
@@ -38,15 +53,7 @@ public class CommIn {
         if(this.webCam != null) {
             this.webCam.doStop();
         }
-
-        // Ip for WebCam server.
-        InetAddress ipAddress = null;
-        try {
-            ipAddress = InetAddress.getByName(this.ip);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-        this.webCam = new WebCam(imageViewer, ipAddress, this.port);
+        this.webCam = new Cam(imageViewer, getInetAddress(this.webCamIp), this.webCamPort);
         this.webCam.setDaemon(true);
         this.webCam.start();
     }
@@ -56,5 +63,43 @@ public class CommIn {
      */
     public void doStopWebCam() {
         this.webCam.doStop();
+    }
+
+    /**
+     * Initialises the SLAM image stream and draws images to ImageViewer.
+     *
+     * @param imageViewer Gui's image viewer, to display video feed.
+     */
+    public void doStartSlamCam(ImageView imageViewer) {
+        if(this.slam != null) {
+            this.slam.doStop();
+        }
+        this.slam = new Cam(imageViewer, getInetAddress(this.slamIp), this.slamPort);
+        this.slam.setDaemon(true);
+        this.slam.start();
+    }
+
+    /**
+     * Stops the web-cam client.
+     */
+    public void doStopSlamCam() {
+        this.slam.doStop();
+    }
+
+
+
+
+    /**
+     * @return InetAddress, null if not found.
+     */
+    private InetAddress getInetAddress(String ip) {
+        // Ip for InetAddress server.
+        InetAddress ipAddress = null;
+        try {
+            ipAddress = InetAddress.getByName(ip);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return ipAddress;
     }
 }

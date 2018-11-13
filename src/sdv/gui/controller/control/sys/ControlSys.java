@@ -24,13 +24,16 @@ public class ControlSys {
     @FXML private Slider slider;
     // GUI's ImageView, to display the images.
     @FXML private ImageView webcam;
+    // GUI's ImageView, to display the images.
+    @FXML private ImageView slamCam;
+
 
     /**
      * Using initialise instead of constructor since this is called after FXML fields are populated.
      */
     public void initialize() {
-        this.commIn = new CommIn("192.168.0.100", 8001);
         this.commOut = new CommOut("192.168.0.100", 8000);
+        this.commIn = new CommIn("192.168.0.100", 8001, "192.168.0.100", 8002);
         this.btnEvent = new KeyboardInput();
     }
 
@@ -47,6 +50,16 @@ public class ControlSys {
     @FXML private void doHandleVideoStop() {
         this.commIn.doStopWebCam();
     }
+
+    /**
+     * Starts the slam cam.
+     */
+    @FXML private void doHandleSlamCam() {this.commIn.doStartSlamCam(this.slamCam);}
+
+    /**
+     * Stops the slam cam.
+     */
+    @FXML private void doStopSlamCam() {this.commIn.doStopSlamCam();}
 
     /**
      * Send string if it is not "".
