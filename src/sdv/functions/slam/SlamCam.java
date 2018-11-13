@@ -1,8 +1,8 @@
 package sdv.functions.slam;
 
 import javafx.scene.image.ImageView;
-import sdv.comm.TcpClient;
-import sdv.functions.misc.ImageDrawer;
+import sdv.comm.TcpSlamClient;
+import sdv.functions.ImageDrawer;
 
 import java.awt.image.BufferedImage;
 import java.net.InetAddress;
@@ -15,7 +15,7 @@ import java.net.InetAddress;
  */
 public class SlamCam extends Thread {
     // Read from datagram socket.
-    private TcpClient tcpClient;
+    private TcpSlamClient tcpSlamClient;
     // Handles the image.
     private ImageDrawer imageDrawer;
     // True to stop reading, false to continue.
@@ -44,10 +44,10 @@ public class SlamCam extends Thread {
      * Loop where picture is read from DatagramSocket and displayed to ImageView.
      */
     public void run() {
-        this.tcpClient = new TcpClient(ipAddress, port);
+        this.tcpSlamClient = new TcpSlamClient(ipAddress, port);
         while (!this.stop) {
             // Gets image.
-            BufferedImage img = this.tcpClient.getImage();
+            BufferedImage img = this.tcpSlamClient.getImage();
 
             if (null != img) {
                 // Draw's the image.
@@ -58,7 +58,7 @@ public class SlamCam extends Thread {
         // Clears the imageView.
         this.imageDrawer.doClear();
         // Close socket before thread is closed.
-        this.tcpClient.doCloseSocket();
+        this.tcpSlamClient.doCloseSocket();
     }
 
     /**
