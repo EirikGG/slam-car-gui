@@ -42,6 +42,12 @@ public class WebCam extends Thread {
      * Loop where picture is read from DatagramSocket and displayed to ImageView.
      */
     public void run() {
+        try {
+            sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         while (!this.stop) {
             // Gets image.
             BufferedImage img = this.udpDatagramReader.getImage();

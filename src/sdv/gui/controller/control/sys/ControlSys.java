@@ -38,7 +38,7 @@ public class ControlSys implements PropertyChangeListener {
      * Using initialise instead of constructor since this is called after FXML fields are populated.
      */
     public void initialize() {
-        this.commOut = new CommOut("192.168.0.100", 8000);
+        this.commOut = new CommOut("192.168.0.100", 8000, 8003);
         this.commIn = new CommIn("192.168.0.100", 8001, 9000, 8002);
         this.btnEvent = new KeyboardInput();
     }
@@ -54,6 +54,7 @@ public class ControlSys implements PropertyChangeListener {
      * Handles what happens when the start video button is pressed.
      */
     @FXML private void doHandleVideoStart() {
+        this.commOut.doSendMainString("WEBCAM:START");
         this.commIn.doStartWebCam(this.webcam);
     }
 
@@ -67,7 +68,10 @@ public class ControlSys implements PropertyChangeListener {
     /**
      * Starts the slam cam.
      */
-    @FXML private void doHandleSlamCam() {this.commIn.doStartSlamCam(this.slamCam);}
+    @FXML private void doHandleSlamCam() {
+        this.commOut.doSendMainString("SLAM:START");
+        this.commIn.doStartSlamCam(this.slamCam);
+    }
 
     /**
      * Stops the slam cam.
@@ -101,6 +105,23 @@ public class ControlSys implements PropertyChangeListener {
      * If connect is pressed, tries to connect ot the server.
      */
     @FXML private void doHandleConnectBtn() {
-        this.commOut.doConnect();
+        this.commOut.doConnectMain();
+    }
+
+    @FXML private void doHandleDisconnectBtn() {
+        this.commOut.doSendMainString("STOP");
+    }
+
+    /**
+     * Handles what happens when manual mode is activated.
+     */
+    @FXML private void doHandleManualMode() {
+        if (this.manualMode.isSelected()) {
+            this.commOut.doSendMainString("MOTORCONTROLLER:START");
+            this.commOut.doConnectMotorController();
+        } else if(!this.manualMode.isSelected()) {
+            this.commOut.doSendMainString("MOTORCONTROLLER:STOP");
+            this.commOut.doCloseSocket();
+        }
     }
 }

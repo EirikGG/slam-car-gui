@@ -46,6 +46,12 @@ public class TcpSlamClient extends Thread {
     @Override
     public void run() {
 
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         while (true) {
             if (this.socket.isConnected())
                 this.pcs.firePropertyChange("Web-cam connected", false, true);

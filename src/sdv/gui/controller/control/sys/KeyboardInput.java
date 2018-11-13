@@ -12,12 +12,15 @@ import javafx.scene.input.KeyEvent;
 public class KeyboardInput {
     // String name of active key.
     private String activeKey;
+    // Strings allowed to register.
+    private String allowedKey;
 
     /**
      * Initializes the class.
      */
     public KeyboardInput() {
         this.activeKey = "";
+        this.allowedKey = "ASDW";
     }
 
     /**
@@ -33,14 +36,13 @@ public class KeyboardInput {
         // String to be returned.
         String string = "";
 
-
         // Activate a key if no other key is active.
-        if (keyEvent.equals("KEY_PRESSED") && this.activeKey.equals("")) {
+        if (keyEvent.equals("KEY_PRESSED") && this.activeKey.equals("") && this.allowedKey.contains(keyName)) {
             this.activeKey = keyName;
             string = keyEvent + ":" + keyName;
 
         // Releases a key if the released key equals the last active key.
-        } else if (keyEvent.equals("KEY_RELEASED") && keyName.equals(this.activeKey)) {
+        } else if (keyEvent.equals("KEY_RELEASED") && keyName.equals(this.activeKey) && this.allowedKey.contains(keyName)) {
             this.activeKey = "";
             string = keyEvent + ":" + keyName;
         }

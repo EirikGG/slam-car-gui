@@ -44,6 +44,12 @@ public class SlamCam extends Thread {
      * Loop where picture is read from DatagramSocket and displayed to ImageView.
      */
     public void run() {
+        try {
+            sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         this.tcpClient = new TcpClient(ipAddress, port);
         while (!this.stop) {
             // Gets image.

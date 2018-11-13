@@ -1,8 +1,7 @@
 package sdv.coupling;
 
+import sdv.comm.TcpMainClient;
 import sdv.comm.TcpMotorClient;
-import sdv.comm.UdpMotorClient;
-
 /**
  * Interface for communication the gui is sending "out".
  *
@@ -10,19 +9,24 @@ import sdv.comm.UdpMotorClient;
  * @version 30.10.2018.
  */
 public class CommOut {
+    // Socket form main communication.
+    private TcpMainClient mainComm;
     // Socket for communicating with motor controller.
     private TcpMotorClient motorController;
-    // MotorController ip.
+    // Server ip.
     private String ip;
     // MotorController port.
-    private int port;
+    private int motorPort;
+    // Main port.
+    private int mainPort;
 
     /**
      * Creates new socket and defines the addresses.
      */
-    public CommOut(String ip, int port) {
-        this.ip = ip;
-        this.port = port;
+    public CommOut(String motorIp, int motorPort, int mainPort) {
+        this.ip = motorIp;
+        this.motorPort = motorPort;
+        this.mainPort = mainPort;
     }
 
     /**
@@ -35,18 +39,39 @@ public class CommOut {
     }
 
     /**
+     * Sends strings to motor controller class.
+     *
+     * @param str String to send.
+     */
+    public void doSendMainString(String str) {
+        this.mainComm.doWriteString(str);
+    }
+
+    /**
      * Interrupts thread and starts a new one.
      */
-    public void doConnect() {
+    public void doConnectMotorController() {
         if (null != this.motorController) {
             this.motorController.doCloseSocket();
             this.motorController.interrupt();
         }
-        this.motorController = new TcpMotorClient(this.ip, this.port);
+        this.motorController = new TcpMotorClient(this.ip, this.motorPort);
         this.motorController.start();
     }
 
-    public boolean getIsConnected() {
-        return this.motorController.getIsConnected();
+    /**
+     * Connects main communication class.
+     */
+    public void doConnectMain() {
+        if (null != this.mainComm) {
+            this.mainComm.doCloseSocket();
+            this.mainComm.interrupt();
+        }
+        this.mainComm = new TcpMainClient(this.ip, this.mainPort);
+        this.mainComm.start();
+    }
+
+    public void doCloseSocket() {
+        this.mainComm.doCloseSocket();
     }
 }
