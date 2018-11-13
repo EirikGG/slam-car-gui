@@ -90,9 +90,6 @@ public class CommIn {
         this.slam.doStop();
     }
 
-
-
-
     /**
      * @return InetAddress, null if not found.
      */
