@@ -41,8 +41,11 @@ public class ControlSys implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        // If webcam connection.
-        
+        // If webcam connection changes.
+        if (evt.getPropertyName().toUpperCase().equals("WEB_CAM_CONNECT")) {
+            
+        }
+
 
     }
 

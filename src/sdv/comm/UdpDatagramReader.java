@@ -34,12 +34,11 @@ public class UdpDatagramReader extends Thread {
      * @param port      Port to doReconnect to.
      * @param localPort Local port to bind socket to.
      */
-    public UdpDatagramReader(PropertyChangeListener pcl, String ipAddress, int port, int localPort) {
+    public UdpDatagramReader(String ipAddress, int port, int localPort) {
         this.ip = ipAddress;
         this.port = port;
         this.localPort = localPort;
         this.pcs = new PropertyChangeSupport(this);
-        this.pcs.addPropertyChangeListener(pcl);
     }
 
     @Override
