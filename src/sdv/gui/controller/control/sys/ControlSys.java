@@ -8,10 +8,13 @@ import javafx.scene.input.KeyEvent;
 import sdv.coupling.CommIn;
 import sdv.coupling.CommOut;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 /**
  * Controls the control system GUI screen.
  */
-public class ControlSys {
+public class ControlSys implements PropertyChangeListener {
     // Interface for incoming communication.
     private CommIn commIn;
     // Interface for outgoing communication.
@@ -27,7 +30,6 @@ public class ControlSys {
     // GUI's ImageView, to display the images.
     @FXML private ImageView slamCam;
 
-
     /**
      * Using initialise instead of constructor since this is called after FXML fields are populated.
      */
@@ -37,11 +39,18 @@ public class ControlSys {
         this.btnEvent = new KeyboardInput();
     }
 
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        // If webcam connection.
+        
+
+    }
+
     /**
      * Handles what happens when the start video button is pressed.
      */
     @FXML private void doHandleVideoStart() {
-        this.commIn.doStartWebCam(this.webcam);
+        this.commIn.doStartWebCam();
     }
 
     /**

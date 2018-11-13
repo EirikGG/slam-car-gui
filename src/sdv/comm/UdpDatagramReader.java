@@ -1,5 +1,7 @@
 package sdv.comm;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.net.*;
@@ -13,18 +15,37 @@ import javax.imageio.ImageIO;
  * @author Eirik G. Gustafsson
  * @version 25.09.2018.
  */
-public class UdpDatagramReader {
+public class UdpDatagramReader extends Thread {
+    // Listener to listen for change.
+    private PropertyChangeSupport pcs;
     // Datagram socket.
     private DatagramSocket socket;
+    // Ip address to server.
+    private String ip;
+    // Servers port.
+    private int port;
+    // Local port.
+    private int localPort;
 
     /**
      * Creates a socket with ip and port to doReconnect to.
      *
      * @param ipAddress Ip for socket to doReconnect to.
      * @param port      Port to doReconnect to.
+     * @param localPort Local port to bind socket to.
      */
-    public UdpDatagramReader(InetAddress ipAddress, int port, int localPort) {
-        doSetupSocket(ipAddress, port, localPort);
+    public UdpDatagramReader(PropertyChangeListener pcl, String ipAddress, int port, int localPort) {
+        this.ip = ipAddress;
+        this.port = port;
+        this.localPort = localPort;
+        this.pcs = new PropertyChangeSupport(this);
+        this.pcs.addPropertyChangeListener(pcl);
+    }
+
+    @Override
+    public void run() {
+        doCloseSocket();
+        doCreateNewSocket();
     }
 
     /**
@@ -38,7 +59,6 @@ public class UdpDatagramReader {
 
     /**
      * Takes the byte array and assembles it as a image.
-     *
      * @param recivedData Byte array of image.
      * @return Image.
      * @throws IOException Cant read byteArray.
@@ -77,30 +97,40 @@ public class UdpDatagramReader {
     }
 
     /**
-     * Creates a socket and connects it.
-     *
-     * @param ipAddress Ip address for socket to doReconnect to.
-     * @param port      Port nr for socket to doReconnect to.
+     * Creates a new socket.
      */
-    private void doSetupSocket(InetAddress ipAddress, int port, int localPort) {
-        doCloseSocket();
-
+    public void doCreateNewSocket() {
         try {
-            this.socket = new DatagramSocket(localPort);
+            this.socket = new DatagramSocket(this.localPort);
         } catch (SocketException e) {
             e.printStackTrace();
         }
-        this.socket.connect(ipAddress, port);
+        this.socket.connect(getInetAddress(this.ip), this.port);
+        this.pcs.firePropertyChange("WEB_CAM_CONNECT", false, true);
         System.out.println("UdpDatagramReader: Created socket on " + this.socket.getLocalPort() +
                 ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());
     }
 
     /**
-     * Closes the socket.
+     * Closes the socket if it exists.
      */
     public void doCloseSocket() {
         if (null != this.socket) {
             this.socket.close();
         }
+    }
+
+    /**
+     * @return InetAddress, null if not found.
+     */
+    private InetAddress getInetAddress(String ip) {
+        // Ip for InetAddress server.
+        InetAddress ipAddress = null;
+        try {
+            ipAddress = InetAddress.getByName(ip);
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+        return ipAddress;
     }
 }
