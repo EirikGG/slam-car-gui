@@ -2,7 +2,7 @@ package sdv.functions.webcam;
 
 import javafx.scene.image.ImageView;
 import sdv.comm.UdpDatagramReader;
-import sdv.functions.misc.ImageDrawer;
+import sdv.functions.ImageDrawer;
 
 import java.awt.image.BufferedImage;
 import java.net.InetAddress;

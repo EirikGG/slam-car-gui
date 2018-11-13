@@ -59,7 +59,7 @@
                         </GridPane>
                      </top>
                      <center>
-                        <ImageView fx:id="slamCam" fitHeight="486.0" fitWidth="642.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                        <ImageView fx:id="slamCam" fitHeight="486.0" fitWidth="486.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                </children>

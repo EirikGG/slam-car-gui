@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
  * @author Eirik G. Gustafsson
  * @version 25.09.2018.
  */
-public class TcpClient {
+public class TcpSlamClient {
     // Datagram socket.
     private Socket socket;
     // Input stream to read from socket.
@@ -26,7 +26,7 @@ public class TcpClient {
      * @param ipAddress Ip for socket to doReconnect to.
      * @param port      Port to doReconnect to.
      */
-    public TcpClient(InetAddress ipAddress, int port) {
+    public TcpSlamClient(InetAddress ipAddress, int port) {
         doSetupSocket(ipAddress, port);
         try {
             this.reader = new DataInputStream(this.socket.getInputStream());
@@ -88,7 +88,7 @@ public class TcpClient {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("TcpClient: Created socket on " + this.socket.getLocalPort() +
+        System.out.println("TcpSlamClient: Created socket on " + this.socket.getLocalPort() +
                 ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());
     }
 

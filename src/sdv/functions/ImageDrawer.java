@@ -1,4 +1,4 @@
-package sdv.functions.misc;
+package sdv.functions;
 
 
 import javafx.embed.swing.SwingFXUtils;
