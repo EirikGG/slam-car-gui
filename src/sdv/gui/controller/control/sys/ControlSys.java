@@ -33,7 +33,7 @@ public class ControlSys {
      */
     public void initialize() {
         this.commOut = new CommOut("192.168.0.100", 8000);
-        this.commIn = new CommIn("192.168.0.100", 8001, "192.168.0.100", 8002);
+        this.commIn = new CommIn("192.168.0.100", 8001, 9000, 8002);
         this.btnEvent = new KeyboardInput();
     }
 

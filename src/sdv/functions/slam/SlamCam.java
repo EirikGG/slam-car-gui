@@ -1,35 +1,40 @@
 package sdv.functions.slam;
 
 import javafx.scene.image.ImageView;
-import sdv.comm.UdpDatagramReader;
+import sdv.comm.TcpClient;
 import sdv.functions.misc.ImageDrawer;
 
 import java.awt.image.BufferedImage;
 import java.net.InetAddress;
 
 /**
+ * Gets Image from UDP based UdpDatagramReader and sends it to ImageDrawer to be displayed.
  *
- *
- * @author: Eirik G. Gustafsson
- * @version: 23.09.2018.
+ * @author Eirik G. Gustafsson
+ * @version 12.11.2018.
  */
 public class SlamCam extends Thread {
     // Read from datagram socket.
-    private UdpDatagramReader udpDatagramReader;
+    private TcpClient tcpClient;
     // Handles the image.
     private ImageDrawer imageDrawer;
     // True to stop reading, false to continue.
     private boolean stop;
+    // Slams ip.
+    private InetAddress ipAddress;
+    // Slams port.
+    private int port;
 
     /**
-     * Connects to a slam server with ip address and port. Draws images from server to ImageView.
+     * Connects to a UDP cam server with ip address and port, and setups imageViewer.
      *
      * @param imageView Image view to display image.
      * @param ipAddress Ip address for server to read from.
-     * @param port Port for server to doReconnect to.
+     * @param port      Port for server to doReconnect to.
      */
     public SlamCam(ImageView imageView, InetAddress ipAddress, int port) {
-        this.udpDatagramReader = new UdpDatagramReader(ipAddress, port);
+        this.ipAddress = ipAddress;
+        this.port = port;
         this.imageDrawer = new ImageDrawer(imageView);
         this.stop = false;
 
@@ -39,10 +44,10 @@ public class SlamCam extends Thread {
      * Loop where picture is read from DatagramSocket and displayed to ImageView.
      */
     public void run() {
+        this.tcpClient = new TcpClient(ipAddress, port);
         while (!this.stop) {
             // Gets image.
-            BufferedImage img = this.udpDatagramReader.getImage();
-
+            BufferedImage img = this.tcpClient.getImage();
             // Draw's the image.
             this.imageDrawer.drawImage(img);
         }
@@ -50,7 +55,7 @@ public class SlamCam extends Thread {
         // Clears the imageView.
         this.imageDrawer.doClear();
         // Close socket before thread is closed.
-        this.udpDatagramReader.doCloseSocket();
+        this.tcpClient.doCloseSocket();
     }
 
     /**

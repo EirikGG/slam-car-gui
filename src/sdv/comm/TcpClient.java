@@ -1,7 +1,6 @@
 package sdv.comm;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.*;
 
 import java.awt.image.BufferedImage;
@@ -13,9 +12,11 @@ import javax.imageio.ImageIO;
  * @author Eirik G. Gustafsson
  * @version 25.09.2018.
  */
-public class UdpDatagramReader {
+public class TcpClient {
     // Datagram socket.
-    private DatagramSocket socket;
+    private Socket socket;
+    // Input stream to read from socket.
+    private InputStream reader;
 
     /**
      * Creates a socket with ip and port to doReconnect to.
@@ -23,8 +24,13 @@ public class UdpDatagramReader {
      * @param ipAddress Ip for socket to doReconnect to.
      * @param port      Port to doReconnect to.
      */
-    public UdpDatagramReader(InetAddress ipAddress, int port, int localPort) {
-        doSetupSocket(ipAddress, port, localPort);
+    public TcpClient(InetAddress ipAddress, int port) {
+        doSetupSocket(ipAddress, port);
+        try {
+            this.reader = this.socket.getInputStream();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -64,16 +70,13 @@ public class UdpDatagramReader {
      * @throws IOException Nothing to receive.
      */
     private byte[] doReadSocket() {
-        byte[] receivedData = new byte[15000];
-        DatagramPacket packet = new DatagramPacket(receivedData, receivedData.length);
-
+        byte[] bytes = new byte[672400];
         try {
-            this.socket.receive(packet);
+            this.reader.read(bytes, 0, 820*820);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return packet.getData();
+        return bytes;
     }
 
     /**
@@ -82,16 +85,15 @@ public class UdpDatagramReader {
      * @param ipAddress Ip address for socket to doReconnect to.
      * @param port      Port nr for socket to doReconnect to.
      */
-    private void doSetupSocket(InetAddress ipAddress, int port, int localPort) {
+    private void doSetupSocket(InetAddress ipAddress, int port) {
         doCloseSocket();
-
+            this.socket = new Socket();
         try {
-            this.socket = new DatagramSocket(localPort);
-        } catch (SocketException e) {
+            this.socket.connect(getSocketAddress(ipAddress, port));
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        this.socket.connect(ipAddress, port);
-        System.out.println("UdpDatagramReader: Created socket on " + this.socket.getLocalPort() +
+        System.out.println("TcpClient: Created socket on " + this.socket.getLocalPort() +
                 ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());
     }
 
@@ -100,7 +102,15 @@ public class UdpDatagramReader {
      */
     public void doCloseSocket() {
         if (null != this.socket) {
-            this.socket.close();
+            try {
+                this.socket.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private InetSocketAddress getSocketAddress(InetAddress ip, int port) {
+        return new InetSocketAddress(ip, port);
     }
 }

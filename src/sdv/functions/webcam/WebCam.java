@@ -1,4 +1,4 @@
-package sdv.functions;
+package sdv.functions.webcam;
 
 import javafx.scene.image.ImageView;
 import sdv.comm.UdpDatagramReader;
@@ -13,7 +13,7 @@ import java.net.InetAddress;
  * @author Eirik G. Gustafsson
  * @version 12.11.2018.
  */
-public class Cam extends Thread {
+public class WebCam extends Thread {
     // Read from datagram socket.
     private UdpDatagramReader udpDatagramReader;
     // Handles the image.
@@ -28,8 +28,8 @@ public class Cam extends Thread {
      * @param ipAddress Ip address for server to read from.
      * @param port      Port for server to doReconnect to.
      */
-    public Cam(ImageView imageView, InetAddress ipAddress, int port) {
-        this.udpDatagramReader = new UdpDatagramReader(ipAddress, port);
+    public WebCam(ImageView imageView, InetAddress ipAddress, int port, int localPort) {
+        this.udpDatagramReader = new UdpDatagramReader(ipAddress, port, localPort);
         this.imageDrawer = new ImageDrawer(imageView);
         this.stop = false;
 

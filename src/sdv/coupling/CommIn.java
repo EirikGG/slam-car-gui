@@ -1,7 +1,8 @@
 package sdv.coupling;
 
 import javafx.scene.image.ImageView;
-import sdv.functions.Cam;
+import sdv.functions.slam.SlamCam;
+import sdv.functions.webcam.WebCam;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -13,35 +14,38 @@ import java.net.UnknownHostException;
  * @version 23.09.2018.
  */
 public class CommIn {
+    // Server ip.
+    private String serverIp;
+
     // Reads from web-cam server.
-    private Cam webCam;
-    // Server webCamIp address.
-    private String webCamIp;
+    private WebCam webCam;
     // Servers port.
     private int webCamPort;
+    // Slam local port.
+    private int localWebCamPort;
+
 
     // Reads from slam server.
-    private Cam slam;
-    // Slam server ip address.
-    private String slamIp;
+    private SlamCam slam;
     // Slam servers webCamPort.
     private int slamPort;
-
 
     /**
      * Initial values.
      */
-    public CommIn(String webCamIp, int webCamPort, String slamIp, int slamPort) {
+    public CommIn(String serverIp, int webCamPort, int localWebCamPort, int slamPort) {
+        this.serverIp = serverIp;
+
         // Webcam info.
-        this.webCamIp = webCamIp;
         this.webCamPort = webCamPort;
+        this.localWebCamPort = localWebCamPort;
         this.webCam = null;
 
 
         // Slam info.
         this.slam = null;
-        this.slamIp = slamIp;
         this.slamPort = slamPort;
+
     }
 
     /**
@@ -53,7 +57,7 @@ public class CommIn {
         if(this.webCam != null) {
             this.webCam.doStop();
         }
-        this.webCam = new Cam(imageViewer, getInetAddress(this.webCamIp), this.webCamPort);
+        this.webCam = new WebCam(imageViewer, getInetAddress(this.serverIp), this.webCamPort, this.localWebCamPort);
         this.webCam.setDaemon(true);
         this.webCam.start();
     }
@@ -74,7 +78,7 @@ public class CommIn {
         if(this.slam != null) {
             this.slam.doStop();
         }
-        this.slam = new Cam(imageViewer, getInetAddress(this.slamIp), this.slamPort);
+        this.slam = new SlamCam(imageViewer, getInetAddress(this.serverIp), this.slamPort);
         this.slam.setDaemon(true);
         this.slam.start();
     }
