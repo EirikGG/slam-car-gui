@@ -75,7 +75,7 @@ public class Login {
             Parent root = FXMLLoader.load(getClass().getResource("../../scenes/ControlSys.fxml"));
 
             // scenes size.
-            int width = 1400;
+            int width = 1250;
             int height = 700;
 
             // Centering the scene.

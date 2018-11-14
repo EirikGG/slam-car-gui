@@ -80,6 +80,8 @@ public class ControlSys implements PropertyChangeListener {
             this.commOut.doConnectMain(this);
         else {
             doDisconnect();
+            this.manualMode.setSelected(false);
+            this.slider.setValue(32);
         }
     }
 
@@ -99,6 +101,8 @@ public class ControlSys implements PropertyChangeListener {
                             this.webCamStart.setDisable(false);
                             this.webCamStop.setDisable(false);
                             this.manualMode.setDisable(false);
+                            this.slamCamStart.setDisable(false);
+                            this.slamCamStop.setDisable(false);
 
                         } else {
                             this.connectedLabel.setText("Disconnected");
@@ -129,6 +133,7 @@ public class ControlSys implements PropertyChangeListener {
      */
     @FXML
     private void doHandleVideoStop() {
+        this.commOut.doSendMainString("WEBCAM:STOP");
         this.commIn.doStopWebCam();
     }
 
@@ -136,7 +141,7 @@ public class ControlSys implements PropertyChangeListener {
      * Starts the slam cam.
      */
     @FXML
-    private void doHandleSlamCam() {
+    private void doStartSlamCam() {
         this.commOut.doSendMainString("SLAM:START");
         this.commIn.doStartSlamCam(this.slamCam);
     }
@@ -146,6 +151,7 @@ public class ControlSys implements PropertyChangeListener {
      */
     @FXML
     private void doStopSlamCam() {
+        this.commOut.doSendMainString("SLAM:STOP");
         this.commIn.doStopSlamCam();
     }
 
@@ -182,14 +188,10 @@ public class ControlSys implements PropertyChangeListener {
         if (this.manualMode.isSelected()) {
             this.commOut.doSendMainString("MOTORCONTROLLER:START");
             this.commOut.doConnectMotorController();
-            this.slamCamStart.setDisable(false);
-            this.slamCamStop.setDisable(false);
             this.slider.setDisable(false);
         } else if (!this.manualMode.isSelected()) {
             this.commOut.doSendMainString("MOTORCONTROLLER:STOP");
             this.commOut.doCloseMotorSocket();
-            this.slamCamStart.setDisable(true);
-            this.slamCamStop.setDisable(true);
             this.slider.setDisable(true);
         }
     }
