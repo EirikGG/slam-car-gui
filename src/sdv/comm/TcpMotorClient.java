@@ -43,8 +43,7 @@ public class TcpMotorClient extends Thread {
         try {
             this.writer = new PrintWriter(this.socket.getOutputStream(), true);
         } catch (IOException e) {
-            //e.printStackTrace();
-            System.out.println("TcpMotorClient: Cant set PrintWriter");
+            System.out.println("TcpMotorClient: " + e.getMessage());
         }
     }
 
@@ -73,7 +72,7 @@ public class TcpMotorClient extends Thread {
             try {
                 this.socket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("TcpMotorClient: " + e.getMessage());
             }
         }
 
@@ -87,7 +86,7 @@ public class TcpMotorClient extends Thread {
 
         } catch (IOException e) {
             this.socket = null;
-            System.out.println("TcpMotorClient: Cant connect socket");
+            System.out.println("TcpMotorClient: " + e.getMessage());
         }
     }
 
@@ -110,7 +109,7 @@ public class TcpMotorClient extends Thread {
             try {
                 this.socket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("TcpMotorClient: " + e.getMessage());
             }
         }
     }

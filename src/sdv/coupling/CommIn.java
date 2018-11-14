@@ -1,11 +1,9 @@
 package sdv.coupling;
 
 import javafx.scene.image.ImageView;
-import sdv.functions.slam.SlamCam;
-import sdv.functions.webcam.WebCam;
-import sdv.gui.controller.control.sys.ControlSys;
+import sdv.functions.video.stream.slam.SlamCam;
+import sdv.functions.video.stream.webcam.WebCam;
 
-import java.beans.PropertyChangeListener;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
@@ -56,8 +54,9 @@ public class CommIn {
      * @param imageViewer Gui's image viewer, to display video feed.
      */
     public void doStartWebCam(ImageView imageViewer) {
-        if(this.webCam != null) {
+        if (this.webCam != null) {
             this.webCam.doStop();
+            this.webCam.interrupt();
         }
         this.webCam = new WebCam(imageViewer, getInetAddress(this.serverIp), this.webCamPort, this.localWebCamPort);
         this.webCam.setDaemon(true);
@@ -68,7 +67,8 @@ public class CommIn {
      * Stops the web-cam client.
      */
     public void doStopWebCam() {
-        this.webCam.doStop();
+        if (null != this.webCam)
+            this.webCam.doStop();
     }
 
     /**
@@ -77,8 +77,9 @@ public class CommIn {
      * @param imageViewer Gui's image viewer, to display video feed.
      */
     public void doStartSlamCam(ImageView imageViewer) {
-        if(this.slam != null) {
+        if (this.slam != null) {
             this.slam.doStop();
+            this.slam.interrupt();
         }
         this.slam = new SlamCam(imageViewer, getInetAddress(this.serverIp), this.slamPort);
         this.slam.setDaemon(true);
@@ -89,10 +90,9 @@ public class CommIn {
      * Stops the web-cam client.
      */
     public void doStopSlamCam() {
-        this.slam.doStop();
+        if (null != this.slam)
+            this.slam.doStop();
     }
-
-
 
 
     /**

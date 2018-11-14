@@ -3,8 +3,6 @@ package sdv.comm;
 import java.awt.*;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.net.*;
 
@@ -16,17 +14,11 @@ import java.awt.image.BufferedImage;
  * @author Eirik G. Gustafsson
  * @version 25.09.2018.
  */
-public class TcpSlamClient extends Thread {
-    // Listener to listen for change.
-    private PropertyChangeSupport pcs;
+public class TcpSlamClient {
     // Datagram socket.
     private Socket socket;
     // Input stream to read from socket.
     private DataInputStream reader;
-    // Servers ip.
-    private String ip;
-    // Servers port.
-    private int port;
 
     /**
      * Creates a socket with ip and port to doReconnect to.
@@ -34,29 +26,12 @@ public class TcpSlamClient extends Thread {
      * @param ipAddress Ip for socket to doReconnect to.
      * @param port      Port to doReconnect to.
      */
-    public TcpSlamClient(PropertyChangeListener pcl, String ipAddress, int port) {
-        // Saves server info.
-        this.ip = ipAddress;
-        this.port = port;
-
-        this.pcs = new PropertyChangeSupport(this);
-        this.pcs.addPropertyChangeListener(pcl);
-    }
-
-    @Override
-    public void run() {
-
+    public TcpSlamClient(InetAddress ipAddress, int port) {
+        doSetupSocket(ipAddress, port);
         try {
-            sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        while (true) {
-            if (this.socket.isConnected())
-                this.pcs.firePropertyChange("Web-cam connected", false, true);
-            else
-                this.pcs.firePropertyChange("Web-cam connected", true, false);
+            this.reader = new DataInputStream(this.socket.getInputStream());
+        } catch (IOException e) {
+            System.out.println("TcpSlamClient: " + e.getMessage());
         }
     }
 
@@ -79,14 +54,13 @@ public class TcpSlamClient extends Thread {
     private BufferedImage doAssembleData(byte[] recivedData) {
 
         BufferedImage img = new BufferedImage(820, 820, BufferedImage.TYPE_BYTE_GRAY);
-        img.setData(Raster.createRaster(img.getSampleModel(), new DataBufferByte(recivedData, recivedData.length), new Point()));
+        img.setData(Raster.createRaster(img.getSampleModel(), new DataBufferByte(recivedData, recivedData.length), new Point() ) );
 
         return img;
     }
 
     /**
      * Reads from dDatagramSocket, returns the data from the packet.
-     *
      * @return Data from DatagramSocket.
      * @throws IOException Nothing to receive.
      */
@@ -95,7 +69,7 @@ public class TcpSlamClient extends Thread {
         try {
             this.reader.readFully(bytes, 0, bytes.length);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("TcpSlamClient: " + e.getMessage());
         }
         return bytes;
     }
@@ -106,14 +80,14 @@ public class TcpSlamClient extends Thread {
      * @param ipAddress Ip address for socket to doReconnect to.
      * @param port      Port nr for socket to doReconnect to.
      */
-    public void doCreateNewSocket(String ipAddress, int port) {
+    private void doSetupSocket(InetAddress ipAddress, int port) {
+        doCloseSocket();
         this.socket = new Socket();
         try {
             this.socket.connect(getSocketAddress(ipAddress, port));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("TcpSlamClient: " + e.getMessage());
         }
-        doSetupDataInputStream();
         System.out.println("TcpSlamClient: Created socket on " + this.socket.getLocalPort() +
                 ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());
     }
@@ -126,42 +100,18 @@ public class TcpSlamClient extends Thread {
             try {
                 this.socket.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("TcpSlamClient: " + e.getMessage());
             }
         }
     }
 
     /**
      * Creates a socket address for a socket to connect to.
-     *
-     * @param ip   Ip address.
+     * @param ip Ip address.
      * @param port Port to connect to.
      * @return InetSocketAddress.
      */
-    private InetSocketAddress getSocketAddress(String ip, int port) {
-        // Ip for InetAddress server.
-        InetAddress ipAddress = null;
-        // Socket address to connect to.
-        InetSocketAddress socketAddress = null;
-
-        try {
-            ipAddress = InetAddress.getByName(ip);
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-        }
-
-        socketAddress = new InetSocketAddress(ipAddress, port);
-        return socketAddress;
-    }
-
-    /**
-     * Create server reader.
-     */
-    private void doSetupDataInputStream() {
-        try {
-            this.reader = new DataInputStream(this.socket.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private InetSocketAddress getSocketAddress(InetAddress ip, int port) {
+        return new InetSocketAddress(ip, port);
     }
 }

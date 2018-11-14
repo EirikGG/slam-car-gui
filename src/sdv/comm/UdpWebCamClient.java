@@ -13,7 +13,7 @@ import javax.imageio.ImageIO;
  * @author Eirik G. Gustafsson
  * @version 25.09.2018.
  */
-public class UdpDatagramReader {
+public class UdpWebCamClient {
     // Datagram socket.
     private DatagramSocket socket;
 
@@ -23,9 +23,8 @@ public class UdpDatagramReader {
      * @param ipAddress Ip for socket to doReconnect to.
      * @param port      Port to doReconnect to.
      */
-    public UdpDatagramReader(InetAddress ipAddress, int port, int localPort) {
+    public UdpWebCamClient(InetAddress ipAddress, int port, int localPort) {
         doSetupSocket(ipAddress, port, localPort);
-
     }
 
     /**
@@ -52,7 +51,7 @@ public class UdpDatagramReader {
         try {
             img = ImageIO.read(new ByteArrayInputStream(recivedData));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("TcpWebCamClient: " + e.getMessage());
         }
 
         return img;
@@ -71,7 +70,7 @@ public class UdpDatagramReader {
         try {
             this.socket.receive(packet);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("TcpWebCamClient: " + e.getMessage());
         }
 
         return packet.getData();
@@ -89,10 +88,10 @@ public class UdpDatagramReader {
         try {
             this.socket = new DatagramSocket(localPort);
         } catch (SocketException e) {
-            e.printStackTrace();
+            System.out.println("TcpWebCamClient: " + e.getMessage());
         }
         this.socket.connect(ipAddress, port);
-        System.out.println("UdpDatagramReader: Created socket on " + this.socket.getLocalPort() +
+        System.out.println("UdpWebCamClient: Created socket on " + this.socket.getLocalPort() +
                 ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());
     }
 

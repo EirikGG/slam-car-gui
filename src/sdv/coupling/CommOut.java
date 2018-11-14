@@ -2,6 +2,8 @@ package sdv.coupling;
 
 import sdv.comm.TcpMainClient;
 import sdv.comm.TcpMotorClient;
+import sdv.gui.controller.control.sys.ControlSys;
+
 /**
  * Interface for communication the gui is sending "out".
  *
@@ -56,22 +58,30 @@ public class CommOut {
             this.motorController.interrupt();
         }
         this.motorController = new TcpMotorClient(this.ip, this.motorPort);
+        this.motorController.setDaemon(true);
         this.motorController.start();
     }
 
     /**
      * Connects main communication class.
      */
-    public void doConnectMain() {
+    public void doConnectMain(ControlSys controlSys) {
         if (null != this.mainComm) {
             this.mainComm.doCloseSocket();
             this.mainComm.interrupt();
         }
-        this.mainComm = new TcpMainClient(this.ip, this.mainPort);
+        this.mainComm = new TcpMainClient(controlSys, this.ip, this.mainPort);
+        this.mainComm.setDaemon(true);
         this.mainComm.start();
     }
 
-    public void doCloseSocket() {
-        this.mainComm.doCloseSocket();
+    public void doCloseMainSocket() {
+        if (null != this.mainComm)
+            this.mainComm.doCloseSocket();
+    }
+
+    public void doCloseMotorSocket() {
+        if (null != this.motorController)
+            this.motorController.doCloseSocket();
     }
 }

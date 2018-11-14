@@ -45,13 +45,13 @@
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doStopSlamCam" text="Stop" GridPane.columnIndex="2" />
+                              <Button fx:id="slamCamStop" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doStopSlamCam" text="Stop" GridPane.columnIndex="2" />
                               <Label text="Slam-cam:">
                                  <font>
                                     <Font size="30.0" />
                                  </font>
                               </Label>
-                              <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleSlamCam" text="Start" GridPane.columnIndex="1" />
+                              <Button fx:id="slamCamStart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleSlamCam" text="Start" GridPane.columnIndex="1" />
                            </children>
                            <BorderPane.margin>
                               <Insets left="10.0" right="10.0" />
@@ -90,7 +90,6 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </GridPane.margin>
                   </Label>
-                  <Button layoutX="20.0" layoutY="63.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleDisconnectBtn" text="Disconnect" GridPane.rowIndex="2" />
                </children>
                <padding>
                   <Insets left="10.0" top="10.0" />
@@ -116,8 +115,8 @@
                               <Font size="30.0" />
                            </font>
                         </Label>
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStart" text="Start" GridPane.columnIndex="1" />
-                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStop" text="Stop" GridPane.columnIndex="2" />
+                        <Button fx:id="webCamStart" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStart" text="Start" GridPane.columnIndex="1" />
+                        <Button fx:id="webCamStop" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#doHandleVideoStop" text="Stop" GridPane.columnIndex="2" />
                      </children>
                      <BorderPane.margin>
                         <Insets left="10.0" />
