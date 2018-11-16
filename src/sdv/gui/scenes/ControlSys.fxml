@@ -59,7 +59,7 @@
                         </GridPane>
                      </top>
                      <center>
-                        <ImageView fx:id="slamCam" fitHeight="486.0" fitWidth="616.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                        <ImageView fx:id="slamCam" fitHeight="470.0" fitWidth="620.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                      </center>
                   </BorderPane>
                </children>
@@ -105,7 +105,7 @@
                <children>
                   <BorderPane prefHeight="512.0" prefWidth="683.0">
                      <center>
-                        <ImageView fx:id="webcam" fitHeight="478.0" fitWidth="578.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
+                        <ImageView fx:id="webcam" fitHeight="470.0" fitWidth="620.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
                      </center>
                      <top>
                         <GridPane BorderPane.alignment="CENTER">

@@ -54,10 +54,8 @@ public class CommIn {
      * @param imageViewer Gui's image viewer, to display video feed.
      */
     public void doStartWebCam(ImageView imageViewer) {
-        if (this.webCam != null) {
-            this.webCam.doStop();
-            this.webCam.interrupt();
-        }
+        doStopWebCam();
+
         this.webCam = new WebCam(imageViewer, getInetAddress(this.serverIp), this.webCamPort, this.localWebCamPort);
         this.webCam.setDaemon(true);
         this.webCam.start();
@@ -67,8 +65,11 @@ public class CommIn {
      * Stops the web-cam client.
      */
     public void doStopWebCam() {
-        if (null != this.webCam)
+        if (null != this.webCam) {
             this.webCam.doStop();
+            this.webCam.interrupt();
+
+        }
     }
 
     /**

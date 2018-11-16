@@ -61,8 +61,6 @@ public class SlamCam extends Thread {
             }
         }
 
-        // Clears the imageView.
-        this.imageDrawer.doClear();
         // Close socket before thread is closed.
         this.tcpSlamClient.doCloseSocket();
     }

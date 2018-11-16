@@ -106,6 +106,11 @@ public class TcpMainClient extends Thread {
      * Closes socket.
      */
     public void doCloseSocket() {
+        try {
+            sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         if (null != this.socket) {
             try {
                 this.socket.close();
