@@ -5,6 +5,7 @@ import sdv.comm.TcpSlamClient;
 import sdv.functions.misc.ImageDrawer;
 import sdv.gui.controller.control.sys.ControlSys;
 
+import javax.naming.ldap.Control;
 import java.awt.image.BufferedImage;
 import java.net.InetAddress;
 
@@ -25,6 +26,8 @@ public class SlamCam extends Thread {
     private InetAddress ipAddress;
     // Slams port.
     private int port;
+    // Observer.
+    private ControlSys sys;
 
     /**
      * Connects to a UDP cam server with ip address and port, and setups imageViewer.
@@ -38,8 +41,7 @@ public class SlamCam extends Thread {
         this.port = port;
         this.imageDrawer = new ImageDrawer(imageView);
         this.stop = false;
-        this.tcpSlamClient = new TcpSlamClient(ipAddress, port, sys);
-
+        this.sys = sys;
     }
 
     /**
@@ -47,10 +49,12 @@ public class SlamCam extends Thread {
      */
     public void run() {
         try {
-            sleep(10000);
+            Thread.sleep(10000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
+        this.tcpSlamClient = new TcpSlamClient(ipAddress, port, sys);
 
         while (!this.stop) {
             // Gets image.

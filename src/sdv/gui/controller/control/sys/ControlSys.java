@@ -105,7 +105,7 @@ public class ControlSys implements PropertyChangeListener {
                             this.connectedLabel.setText("Connecting...");
                             this.connectBtn.setText("Connect");
                         }
-                    } else if (evt.getPropertyName().equals("UdpWebCamClient")) {
+                    } else if (evt.getPropertyName().equals("WEBCAM:STATUS")) {
                         if (evt.getNewValue().equals("CONNECTED")) {
                             this.webCamLabel.setText("Connected");
 
