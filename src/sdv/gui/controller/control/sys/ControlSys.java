@@ -90,7 +90,7 @@ public class ControlSys implements PropertyChangeListener {
     public void propertyChange(PropertyChangeEvent evt) {
         Platform.runLater(
                 () -> {
-                    if (evt.getPropertyName().toUpperCase().equals("MAIN:STATUS")) {
+                    if (evt.getPropertyName().equals("TcpMainClient")) {
                         if (evt.getNewValue().equals("CONNECTED")) {
                             this.connectedLabel.setText("Connected");
                             this.connectBtn.setText("Disconnect");

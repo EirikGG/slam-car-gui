@@ -4,7 +4,6 @@ import sdv.gui.controller.control.sys.ControlSys;
 
 import java.beans.PropertyChangeSupport;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -12,15 +11,13 @@ import java.net.Socket;
  * @author Eirik G. Gustafsson
  * @version 22.11.2018.
  */
-public abstract class Client {
+public abstract class Client extends Thread {
     // Property change support, reports change in STATUS status.
     private PropertyChangeSupport pcs;
     // Objects status.
-    protected String status;
+    private String status;
     // Classes tcp socket.
-    private Socket socket;
-    // Writer for socket comm.
-    protected PrintWriter writer;
+    protected Socket socket;
     // Sockets ip.
     private String ip;
     // Sockets port.
@@ -34,42 +31,47 @@ public abstract class Client {
      * @param ip Server ip.
      * @param port TCP servers port.
      */
-    public Client(ControlSys sys, String ip, int port) {
+    protected Client(ControlSys sys, String ip, int port, String objName) {
         this.pcs = new PropertyChangeSupport(this);
         this.pcs.addPropertyChangeListener(sys);
         this.status = "DISCONNECTED";
         this.ip = ip;
         this.port = port;
+        this.objName = objName;
     }
 
     /**
      * Connects the socket to a remote location.
-     * @param eventName
      */
-    protected void doConnect(String eventName) {
+    public boolean doConnect() {
+        boolean result = false;
+
         // Updates classes status.
-        this.pcs.firePropertyChange(eventName, this.status, "LOADING");
+        this.pcs.firePropertyChange(this.objName, this.status, "LOADING");
         this.status = "LOADING";
 
         // Connects the socket to remote host.
         try {
             // Connects port.
             this.socket = new Socket(this.ip, this.port);
-            System.out.println(this.objName + " connected = " + this.ip + ", " + this.port);
+            System.out.println(this.objName + ": " + "connected " + this.ip + ", " + this.port);
 
             // Fires connection status change.
-            this.pcs.firePropertyChange("MAIN:STATUS", this.status, "CONNECTED");
+            this.pcs.firePropertyChange(this.objName, this.status, "CONNECTED");
             this.status = "CONNECTED";
+            result = true;
 
         } catch (IOException e) {
             // Prints an error message.
-            System.out.println(this.objName + " = " + e.getMessage());
+            System.out.println(this.objName + ": " + e.getMessage());
 
             // Fires connection status change.
-            this.pcs.firePropertyChange("MAIN:STATUS", this.status, "DISCONNECTED");
+            this.pcs.firePropertyChange(this.objName, this.status, "DISCONNECTED");
             this.status = "DISCONNECTED";
+            result = false;
         }
 
+        return result;
     }
 
     /**
@@ -81,7 +83,7 @@ public abstract class Client {
                 this.socket.close();
             } catch (IOException e) {
                 // Prints an error.
-                System.out.println(this.objName + e.getMessage());
+                System.out.println(this.objName + ": " + e.getMessage());
             }
 
             // Fires an event, the socket is closed.
