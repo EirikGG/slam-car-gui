@@ -102,7 +102,7 @@ public class ControlSys implements PropertyChangeListener {
                             doDisconnect();
                             this.slider.setDisable(true);
                         } else if (evt.getNewValue().equals("LOADING")) {
-                            this.connectedLabel.setText("Loading...");
+                            this.connectedLabel.setText("Connecting...");
                             this.connectBtn.setText("Connect");
                         }
                     } else if (evt.getPropertyName().toUpperCase().equals("WEBCAM:STATUS")) {
@@ -113,7 +113,7 @@ public class ControlSys implements PropertyChangeListener {
                             this.webCamLabel.setText("Disconnected");
 
                         } else if (evt.getNewValue().equals("LOADING")) {
-                            this.webCamLabel.setText("Loading...");
+                            this.webCamLabel.setText("Connecting...");
                         }
 
                     } else if (evt.getPropertyName().toUpperCase().equals("SLAM:STATUS")) {
@@ -124,7 +124,7 @@ public class ControlSys implements PropertyChangeListener {
                             this.slamCamLabel.setText("Disconnected");
 
                         } else if (evt.getNewValue().equals("LOADING")) {
-                            this.slamCamLabel.setText("Loading...");
+                            this.slamCamLabel.setText("Connecting...");
                         }
 
                     } else if (evt.getPropertyName().toUpperCase().equals("MOTOR:STATUS")) {
@@ -135,7 +135,7 @@ public class ControlSys implements PropertyChangeListener {
                             this.manualModeLabel.setText("Disconnected");
 
                         } else if (evt.getNewValue().equals("LOADING")) {
-                            this.manualModeLabel.setText("Loading...");
+                            this.manualModeLabel.setText("Connecting...");
                         }
 
                     }
