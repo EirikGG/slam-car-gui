@@ -1,5 +1,8 @@
 package sdv.comm;
 
+import sdv.gui.controller.control.sys.ControlSys;
+
+import java.beans.PropertyChangeSupport;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -11,6 +14,10 @@ import java.net.Socket;
  * @version 03.11.2018.
  */
 public class TcpMotorClient extends Thread {
+    // Property change support, reports change in STATUS status.
+    private PropertyChangeSupport pcs;
+    // Classes starting status.
+    private String status;
     // Classes tcp socket.
     private Socket socket;
     // Writer for socket comm.
@@ -23,9 +30,12 @@ public class TcpMotorClient extends Thread {
     /**
      * Initializes with a new socket.
      */
-    public TcpMotorClient(String ip, int port) {
+    public TcpMotorClient(String ip, int port, ControlSys sys) {
+        this.pcs = new PropertyChangeSupport(this);
+        this.pcs.addPropertyChangeListener(sys);
         this.ip = ip;
         this.port = port;
+        this.status = "DISCONNECTED";
     }
 
     @Override
@@ -44,6 +54,8 @@ public class TcpMotorClient extends Thread {
             this.writer = new PrintWriter(this.socket.getOutputStream(), true);
         } catch (IOException e) {
             System.out.println("TcpMotorClient: " + e.getMessage());
+            this.pcs.firePropertyChange("MOTOR:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
         }
     }
 
@@ -58,6 +70,8 @@ public class TcpMotorClient extends Thread {
             System.out.println(str);
         } else {
             System.out.println("TcpMotorClient: Cant send, PrintWriter is null");
+            this.pcs.firePropertyChange("MOTOR:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
         }
     }
 
@@ -67,6 +81,8 @@ public class TcpMotorClient extends Thread {
      * @return True if connection is successful and false if not.
      */
     private void doConnect() {
+        this.pcs.firePropertyChange("MOTOR:STATUS", this.status, "LOADING");
+        this.status = "LOADING";
 
         if (null != this.socket) {
             try {
@@ -83,10 +99,14 @@ public class TcpMotorClient extends Thread {
                     + ";" + this.socket.getPort());
 
             setPrintWriter();
+            this.pcs.firePropertyChange("MOTOR:STATUS", this.status, "CONNECTED");
+            this.status = "CONNECTED";
 
         } catch (IOException e) {
             this.socket = null;
             System.out.println("TcpMotorClient: " + e.getMessage());
+            this.pcs.firePropertyChange("MOTOR:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
         }
     }
 
@@ -111,6 +131,8 @@ public class TcpMotorClient extends Thread {
             } catch (IOException e) {
                 System.out.println("TcpMotorClient: " + e.getMessage());
             }
+            this.pcs.firePropertyChange("MOTOR:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
         }
     }
 }

@@ -52,12 +52,12 @@ public class CommOut {
     /**
      * Interrupts thread and starts a new one.
      */
-    public void doConnectMotorController() {
+    public void doConnectMotorController(ControlSys sys) {
         if (null != this.motorController) {
             this.motorController.doCloseSocket();
             this.motorController.interrupt();
         }
-        this.motorController = new TcpMotorClient(this.ip, this.motorPort);
+        this.motorController = new TcpMotorClient(this.ip, this.motorPort, sys);
         this.motorController.setDaemon(true);
         this.motorController.start();
     }

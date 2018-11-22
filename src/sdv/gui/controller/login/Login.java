@@ -85,7 +85,7 @@ public class Login {
 
             // Set and shows the new scene.
             stage.setTitle(sceneTitle);
-            stage.setScene(new Scene(root, width, height));
+            stage.setScene(new Scene(root));
             stage.show();
 
         } catch (Exception exc) {

@@ -1,8 +1,11 @@
 package sdv.comm;
 
+import sdv.gui.controller.control.sys.ControlSys;
+
 import java.awt.*;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
+import java.beans.PropertyChangeSupport;
 import java.io.*;
 import java.net.*;
 
@@ -15,10 +18,14 @@ import java.awt.image.BufferedImage;
  * @version 25.09.2018.
  */
 public class TcpSlamClient {
+    // Property change support, reports change in STATUS status.
+    private PropertyChangeSupport pcs;
     // Datagram socket.
     private Socket socket;
     // Input stream to read from socket.
     private DataInputStream reader;
+    // Classes starting status.
+    private String status;
 
     /**
      * Creates a socket with ip and port to doReconnect to.
@@ -26,13 +33,16 @@ public class TcpSlamClient {
      * @param ipAddress Ip for socket to doReconnect to.
      * @param port      Port to doReconnect to.
      */
-    public TcpSlamClient(InetAddress ipAddress, int port) {
+    public TcpSlamClient(InetAddress ipAddress, int port, ControlSys sys) {
+        this.pcs = new PropertyChangeSupport(this);
+        this.pcs.addPropertyChangeListener(sys);
         doSetupSocket(ipAddress, port);
         try {
             this.reader = new DataInputStream(this.socket.getInputStream());
         } catch (IOException e) {
             System.out.println("TcpSlamClient: " + e.getMessage());
         }
+        this.status = "DISCONNECTED";
     }
 
     /**
@@ -70,6 +80,8 @@ public class TcpSlamClient {
             this.reader.readFully(bytes, 0, bytes.length);
         } catch (IOException e) {
             System.out.println("TcpSlamClient: " + e.getMessage());
+            this.pcs.firePropertyChange("SLAM:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
         }
         return bytes;
     }
@@ -81,12 +93,18 @@ public class TcpSlamClient {
      * @param port      Port nr for socket to doReconnect to.
      */
     private void doSetupSocket(InetAddress ipAddress, int port) {
+        this.pcs.firePropertyChange("SLAM:STATUS", this.status, "LOADING");
+        this.status = "LOADING";
         doCloseSocket();
         this.socket = new Socket();
         try {
             this.socket.connect(getSocketAddress(ipAddress, port));
+            this.pcs.firePropertyChange("SLAM:STATUS", this.status, "CONNECTED");
+            this.status = "CONNECTED";
         } catch (IOException e) {
             System.out.println("TcpSlamClient: " + e.getMessage());
+            this.pcs.firePropertyChange("SLAM:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
         }
         System.out.println("TcpSlamClient: Created socket on " + this.socket.getLocalPort() +
                 ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());
@@ -102,6 +120,8 @@ public class TcpSlamClient {
             } catch (IOException e) {
                 System.out.println("TcpSlamClient: " + e.getMessage());
             }
+            this.pcs.firePropertyChange("SLAM:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
         }
     }
 

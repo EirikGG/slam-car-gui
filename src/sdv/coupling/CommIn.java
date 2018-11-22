@@ -3,6 +3,7 @@ package sdv.coupling;
 import javafx.scene.image.ImageView;
 import sdv.functions.video.stream.slam.SlamCam;
 import sdv.functions.video.stream.webcam.WebCam;
+import sdv.gui.controller.control.sys.ControlSys;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
@@ -53,10 +54,10 @@ public class CommIn {
      *
      * @param imageViewer Gui's image viewer, to display video feed.
      */
-    public void doStartWebCam(ImageView imageViewer) {
+    public void doStartWebCam(ImageView imageViewer, ControlSys sys) {
         doStopWebCam();
 
-        this.webCam = new WebCam(imageViewer, getInetAddress(this.serverIp), this.webCamPort, this.localWebCamPort);
+        this.webCam = new WebCam(imageViewer, getInetAddress(this.serverIp), this.webCamPort, this.localWebCamPort, sys);
         this.webCam.setDaemon(true);
         this.webCam.start();
     }
@@ -77,12 +78,12 @@ public class CommIn {
      *
      * @param imageViewer Gui's image viewer, to display video feed.
      */
-    public void doStartSlamCam(ImageView imageViewer) {
+    public void doStartSlamCam(ImageView imageViewer, ControlSys sys) {
         if (this.slam != null) {
             this.slam.doStop();
             this.slam.interrupt();
         }
-        this.slam = new SlamCam(imageViewer, getInetAddress(this.serverIp), this.slamPort);
+        this.slam = new SlamCam(imageViewer, getInetAddress(this.serverIp), this.slamPort, sys);
         this.slam.setDaemon(true);
         this.slam.start();
     }

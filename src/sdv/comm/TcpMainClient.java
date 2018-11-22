@@ -12,10 +12,10 @@ import java.net.Socket;
  * @version 13.11.2018.
  */
 public class TcpMainClient extends Thread {
-    // Property change support, reports change in connection status.
+    // Property change support, reports change in STATUS status.
     private PropertyChangeSupport pcs;
-    // Connection status flag.
-    private boolean isConnected;
+    // STATUS status.
+    private String status;
     // Classes tcp socket.
     private Socket socket;
     // Writer for socket comm.
@@ -31,7 +31,7 @@ public class TcpMainClient extends Thread {
     public TcpMainClient(ControlSys controlSys, String ip, int port) {
         this.pcs = new PropertyChangeSupport(this);
         this.pcs.addPropertyChangeListener(controlSys);
-        this.isConnected = false;
+        this.status = "DISCONNECTED";
         this.ip = ip;
         this.port = port;
     }
@@ -65,8 +65,8 @@ public class TcpMainClient extends Thread {
             this.writer.println(str);
             System.out.println(str);
         } else {
-            this.pcs.firePropertyChange("MAIN:CONNECTION", this.isConnected, false);
-            this.isConnected = false;
+            this.pcs.firePropertyChange("MAIN:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
             System.out.println("TcpMotorClient: Cant send, socket is probably null");
         }
     }
@@ -74,9 +74,11 @@ public class TcpMainClient extends Thread {
     /**
      * Connects socket to a remote ip and port. If a socket exists, closes that one first.
      *
-     * @return True if connection is successful and false if not.
+     * @return True if STATUS is successful and false if not.
      */
     private void doConnect() {
+        this.pcs.firePropertyChange("MAIN:STATUS", this.status, "LOADING");
+        this.status = "LOADING";
 
         if (null != this.socket) {
             try {
@@ -91,12 +93,14 @@ public class TcpMainClient extends Thread {
 
             System.out.println("Socket connected to " + this.socket.getInetAddress().toString()
                     + ";" + this.socket.getPort());
-            this.pcs.firePropertyChange("MAIN:CONNECTION", this.isConnected, true);
-            this.isConnected = true;
+            this.pcs.firePropertyChange("MAIN:STATUS", this.status, "CONNECTED");
+            this.status = "CONNECTED";
 
             setPrintWriter();
 
         } catch (IOException e) {
+            this.pcs.firePropertyChange("MAIN:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
             this.socket = null;
             System.out.println("TcpMainClient: " + e.getMessage());
         }
@@ -117,8 +121,8 @@ public class TcpMainClient extends Thread {
             } catch (IOException e) {
                 System.out.println("TcpMainClient: " + e.getMessage());
             }
-            this.pcs.firePropertyChange("MAIN:CONNECTION", this.isConnected, false);
-            this.isConnected = false;
+            this.pcs.firePropertyChange("MAIN:STATUS", this.status, "DISCONNECTED");
+            this.status = "DISCONNECTED";
         }
     }
 }

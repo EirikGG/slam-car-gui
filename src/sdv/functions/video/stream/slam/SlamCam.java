@@ -3,6 +3,7 @@ package sdv.functions.video.stream.slam;
 import javafx.scene.image.ImageView;
 import sdv.comm.TcpSlamClient;
 import sdv.functions.misc.ImageDrawer;
+import sdv.gui.controller.control.sys.ControlSys;
 
 import java.awt.image.BufferedImage;
 import java.net.InetAddress;
@@ -32,11 +33,12 @@ public class SlamCam extends Thread {
      * @param ipAddress Ip address for server to read from.
      * @param port      Port for server to doReconnect to.
      */
-    public SlamCam(ImageView imageView, InetAddress ipAddress, int port) {
+    public SlamCam(ImageView imageView, InetAddress ipAddress, int port, ControlSys sys) {
         this.ipAddress = ipAddress;
         this.port = port;
         this.imageDrawer = new ImageDrawer(imageView);
         this.stop = false;
+        this.tcpSlamClient = new TcpSlamClient(ipAddress, port, sys);
 
     }
 
@@ -50,7 +52,6 @@ public class SlamCam extends Thread {
             e.printStackTrace();
         }
 
-        this.tcpSlamClient = new TcpSlamClient(ipAddress, port);
         while (!this.stop) {
             // Gets image.
             BufferedImage img = this.tcpSlamClient.getImage();

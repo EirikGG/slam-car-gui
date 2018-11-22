@@ -3,6 +3,7 @@ package sdv.functions.video.stream.webcam;
 import javafx.scene.image.ImageView;
 import sdv.comm.UdpWebCamClient;
 import sdv.functions.misc.ImageDrawer;
+import sdv.gui.controller.control.sys.ControlSys;
 
 import java.awt.image.BufferedImage;
 import java.net.InetAddress;
@@ -28,8 +29,8 @@ public class WebCam extends Thread {
      * @param ipAddress Ip address for server to read from.
      * @param port      Port for server to doReconnect to.
      */
-    public WebCam(ImageView imageView, InetAddress ipAddress, int port, int localPort) {
-        this.udpWebCamClient = new UdpWebCamClient(ipAddress, port, localPort);
+    public WebCam(ImageView imageView, InetAddress ipAddress, int port, int localPort, ControlSys sys) {
+        this.udpWebCamClient = new UdpWebCamClient(ipAddress, port, localPort, sys);
         this.imageDrawer = new ImageDrawer(imageView);
         this.stop = false;
 

@@ -38,7 +38,7 @@ public class ControlSys implements PropertyChangeListener {
     private ImageView slamCam;
     // GUI's connected label.
     @FXML
-    private Label connectedLabel;
+    private Label connectedLabel, manualModeLabel, webCamLabel, slamCamLabel;
     // Indecates if gui is connected to server.
     @FXML
     private Button connectBtn;
@@ -63,11 +63,7 @@ public class ControlSys implements PropertyChangeListener {
         this.btnEvent = new KeyboardInput();
 
         // Disables all buttons not available until connection.
-        this.webCamStart.setDisable(true);
-        this.webCamStop.setDisable(true);
-        this.slamCamStart.setDisable(true);
-        this.slamCamStop.setDisable(true);
-        this.manualMode.setDisable(true);
+        doDisableBtn(true);
         this.slider.setDisable(true);
     }
 
@@ -92,31 +88,59 @@ public class ControlSys implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().toUpperCase().equals("MAIN:CONNECTION")) {
-            Platform.runLater(
-                    () -> {
-                        if ((boolean) evt.getNewValue()) {
+        Platform.runLater(
+                () -> {
+                    if (evt.getPropertyName().toUpperCase().equals("MAIN:STATUS")) {
+                        if (evt.getNewValue().equals("CONNECTED")) {
                             this.connectedLabel.setText("Connected");
                             this.connectBtn.setText("Disconnect");
-                            this.webCamStart.setDisable(false);
-                            this.webCamStop.setDisable(false);
-                            this.manualMode.setDisable(false);
-                            this.slamCamStart.setDisable(false);
-                            this.slamCamStop.setDisable(false);
+                            doDisableBtn(false);
 
-                        } else {
+                        } else if (evt.getNewValue().equals("DISCONNECTED")) {
                             this.connectedLabel.setText("Disconnected");
                             this.connectBtn.setText("Connect");
-                            this.webCamStart.setDisable(true);
-                            this.webCamStop.setDisable(true);
-                            this.slamCamStart.setDisable(true);
-                            this.slamCamStop.setDisable(true);
-                            this.manualMode.setDisable(true);
+                            doDisconnect();
                             this.slider.setDisable(true);
+                        } else if (evt.getNewValue().equals("LOADING")) {
+                            this.connectedLabel.setText("Loading...");
+                            this.connectBtn.setText("Connect");
                         }
+                    } else if (evt.getPropertyName().toUpperCase().equals("WEBCAM:STATUS")) {
+                        if (evt.getNewValue().equals("CONNECTED")) {
+                            this.webCamLabel.setText("Connected");
+
+                        } else if (evt.getNewValue().equals("DISCONNECTED")) {
+                            this.webCamLabel.setText("Disconnected");
+
+                        } else if (evt.getNewValue().equals("LOADING")) {
+                            this.webCamLabel.setText("Loading...");
+                        }
+
+                    } else if (evt.getPropertyName().toUpperCase().equals("SLAM:STATUS")) {
+                        if (evt.getNewValue().equals("CONNECTED")) {
+                            this.slamCamLabel.setText("Connected");
+
+                        } else if (evt.getNewValue().equals("DISCONNECTED")) {
+                            this.slamCamLabel.setText("Disconnected");
+
+                        } else if (evt.getNewValue().equals("LOADING")) {
+                            this.slamCamLabel.setText("Loading...");
+                        }
+
+                    } else if (evt.getPropertyName().toUpperCase().equals("MOTOR:STATUS")) {
+                        if (evt.getNewValue().equals("CONNECTED")) {
+                            this.manualModeLabel.setText("Connected");
+
+                        } else if (evt.getNewValue().equals("DISCONNECTED")) {
+                            this.manualModeLabel.setText("Disconnected");
+
+                        } else if (evt.getNewValue().equals("LOADING")) {
+                            this.manualModeLabel.setText("Loading...");
+                        }
+
                     }
-            );
-        }
+                }
+        );
     }
 
     /**
@@ -125,7 +149,7 @@ public class ControlSys implements PropertyChangeListener {
     @FXML
     private void doHandleVideoStart() {
         this.commOut.doSendMainString("WEBCAM:START");
-        this.commIn.doStartWebCam(this.webcam);
+        this.commIn.doStartWebCam(this.webcam, this);
     }
 
     /**
@@ -143,7 +167,7 @@ public class ControlSys implements PropertyChangeListener {
     @FXML
     private void doStartSlamCam() {
         this.commOut.doSendMainString("SLAM:START");
-        this.commIn.doStartSlamCam(this.slamCam);
+        this.commIn.doStartSlamCam(this.slamCam, this);
     }
 
     /**
@@ -187,7 +211,7 @@ public class ControlSys implements PropertyChangeListener {
     private void doHandleManualMode() {
         if (this.manualMode.isSelected()) {
             this.commOut.doSendMainString("MOTORCONTROLLER:START");
-            this.commOut.doConnectMotorController();
+            this.commOut.doConnectMotorController(this);
             this.slider.setDisable(false);
         } else if (!this.manualMode.isSelected()) {
             this.commOut.doSendMainString("MOTORCONTROLLER:STOP");
@@ -205,5 +229,19 @@ public class ControlSys implements PropertyChangeListener {
         this.commOut.doCloseMotorSocket();
         this.commOut.doSendMainString("STOP");
         this.commOut.doCloseMainSocket();
+        doDisableBtn(true);
+    }
+
+    /**
+     * Disables buttons in GUI.
+     * @param doDisable True to disable buttons, false to enable.
+     */
+    private void doDisableBtn(boolean doDisable) {
+        this.webCamStart.setDisable(doDisable);
+        this.webCamStop.setDisable(doDisable);
+        this.slamCamStart.setDisable(doDisable);
+        this.slamCamStop.setDisable(doDisable);
+        this.manualMode.setDisable(doDisable);
+
     }
 }
