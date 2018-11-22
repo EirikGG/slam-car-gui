@@ -105,7 +105,7 @@ public class ControlSys implements PropertyChangeListener {
                             this.connectedLabel.setText("Connecting...");
                             this.connectBtn.setText("Connect");
                         }
-                    } else if (evt.getPropertyName().toUpperCase().equals("WEBCAM:STATUS")) {
+                    } else if (evt.getPropertyName().equals("UdpWebCamClient")) {
                         if (evt.getNewValue().equals("CONNECTED")) {
                             this.webCamLabel.setText("Connected");
 
@@ -116,7 +116,7 @@ public class ControlSys implements PropertyChangeListener {
                             this.webCamLabel.setText("Connecting...");
                         }
 
-                    } else if (evt.getPropertyName().toUpperCase().equals("SLAM:STATUS")) {
+                    } else if (evt.getPropertyName().equals("TcpSlamClient")) {
                         if (evt.getNewValue().equals("CONNECTED")) {
                             this.slamCamLabel.setText("Connected");
 
@@ -127,7 +127,7 @@ public class ControlSys implements PropertyChangeListener {
                             this.slamCamLabel.setText("Connecting...");
                         }
 
-                    } else if (evt.getPropertyName().toUpperCase().equals("MOTOR:STATUS")) {
+                    } else if (evt.getPropertyName().equals("TcpMotorClient")) {
                         if (evt.getNewValue().equals("CONNECTED")) {
                             this.manualModeLabel.setText("Connected");
 

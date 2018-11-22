@@ -48,6 +48,6 @@ public class TcpMainClient extends Client {
             this.writer.println(str);
             System.out.println(str);
         } else
-            System.out.println(this.objName + ": " + "null == writer");
+            System.out.println(this.objName + ": " + "writer = null");
     }
 }
