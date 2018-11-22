@@ -14,7 +14,7 @@ import javafx.stage.Stage;
  */
 public class SdcGuiStart extends Application {
     // Scene title.
-    public static String sceneTitle = "Autonomous car";
+    public static String sceneTitle = "SLAM car";
 
     // Sets and starts the scene.
     @Override
