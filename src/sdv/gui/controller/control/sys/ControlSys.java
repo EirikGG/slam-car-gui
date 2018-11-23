@@ -88,6 +88,7 @@ public class ControlSys implements PropertyChangeListener {
      */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
+
         Platform.runLater(
                 () -> {
                     if (evt.getPropertyName().equals("TcpMainClient")) {

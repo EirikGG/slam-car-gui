@@ -35,6 +35,8 @@ public class TcpSlamClient {
      * @param port      Port to doReconnect to.
      */
     public TcpSlamClient(InetAddress ipAddress, int port, ControlSys sys) {
+        this.status = "DISCONNECTED";
+        this.objName = "TcpSlamClient";
         this.pcs = new PropertyChangeSupport(this);
         this.pcs.addPropertyChangeListener(sys);
         doSetupSocket(ipAddress, port);
@@ -43,8 +45,6 @@ public class TcpSlamClient {
         } catch (IOException e) {
             System.out.println("TcpSlamClient: " + e.getMessage());
         }
-        this.status = "DISCONNECTED";
-        this.objName = "TcpSlamClient";
     }
 
     /**
@@ -96,6 +96,13 @@ public class TcpSlamClient {
      */
     private void doSetupSocket(InetAddress ipAddress, int port) {
         this.pcs.firePropertyChange(this.objName, this.status, "LOADING");
+
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         this.status = "LOADING";
         doCloseSocket();
         this.socket = new Socket();
@@ -105,8 +112,6 @@ public class TcpSlamClient {
             this.status = "CONNECTED";
         } catch (IOException e) {
             System.out.println("TcpSlamClient: " + e.getMessage());
-            this.pcs.firePropertyChange(this.objName, this.status, "DISCONNECTED");
-            this.status = "DISCONNECTED";
         }
         System.out.println(this.objName + ": " + "Created socket on " + this.socket.getLocalPort() +
                 ", listening to " + this.socket.getInetAddress() + ";" + this.socket.getPort());

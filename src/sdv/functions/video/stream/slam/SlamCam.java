@@ -5,8 +5,8 @@ import sdv.comm.TcpSlamClient;
 import sdv.functions.misc.ImageDrawer;
 import sdv.gui.controller.control.sys.ControlSys;
 
-import javax.naming.ldap.Control;
 import java.awt.image.BufferedImage;
+import java.beans.PropertyChangeSupport;
 import java.net.InetAddress;
 
 /**
@@ -48,11 +48,6 @@ public class SlamCam extends Thread {
      * Loop where picture is read from DatagramSocket and displayed to ImageView.
      */
     public void run() {
-        try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
 
         this.tcpSlamClient = new TcpSlamClient(ipAddress, port, sys);
 

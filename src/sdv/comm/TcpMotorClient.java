@@ -50,7 +50,6 @@ public class TcpMotorClient extends Client {
     public void doWriteString(String str) {
         if (null != this.writer) {
             this.writer.println(str);
-            System.out.println(str);
         } else {
             System.out.println(this.objName + ": " + "writer = null");
         }
