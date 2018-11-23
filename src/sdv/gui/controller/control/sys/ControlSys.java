@@ -230,6 +230,10 @@ public class ControlSys implements PropertyChangeListener {
         this.commOut.doCloseMotorSocket();
         this.commOut.doSendMainString("STOP");
         this.commOut.doCloseMainSocket();
+        this.slamCamLabel.setText("Disconnected");
+        this.webCamLabel.setText("Disconnected");
+        this.manualModeLabel.setText("Disconnected");
+        this.connectedLabel.setText("Disconnected");
         doDisableBtn(true);
     }
 
