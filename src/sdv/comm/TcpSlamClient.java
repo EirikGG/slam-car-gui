@@ -3,6 +3,8 @@ package sdv.comm;
 import sdv.gui.controller.control.sys.ControlSys;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
 import java.beans.PropertyChangeSupport;
@@ -53,7 +55,7 @@ public class TcpSlamClient {
      * @return BufferedImage.
      */
     public BufferedImage getImage() {
-        return doAssembleData(doReadSocket());
+        return doFlipVertically(doAssembleData(doReadSocket()));
     }
 
     /**
@@ -141,4 +143,18 @@ public class TcpSlamClient {
     private InetSocketAddress getSocketAddress(InetAddress ip, int port) {
         return new InetSocketAddress(ip, port);
     }
+
+    /**
+     * The image arrives flipped about the y-axis and this method flips it back.
+     * @param img Image to flip.
+     * @return Flipped image.
+     */
+    private BufferedImage doFlipVertically(BufferedImage img) {
+        // Flip the image vertically
+        AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
+        tx.translate(0, -img.getHeight(null));
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+        return op.filter(img, null);
+    }
+
 }
