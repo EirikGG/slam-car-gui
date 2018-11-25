@@ -225,7 +225,7 @@ public class ControlSys implements PropertyChangeListener {
      * Stops all open connections.
      */
     private void doDisconnect() {
-        this.commIn.doStopSlamCam();
+        this.commIn.doStopSlamCam();-
         this.commIn.doStopWebCam();
         this.commOut.doCloseMotorSocket();
         this.commOut.doSendMainString("STOP");
